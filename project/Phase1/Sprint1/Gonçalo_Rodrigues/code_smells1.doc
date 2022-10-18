@@ -1,12 +1,127 @@
+author: @GoncaloRodri
+
 Code Smell 1:
 
 Code Snippet:
 
+f.run0(new Function<CustomPropertyDefinition, S>() {
+      @Override
+      public S apply(@Nullable CustomPropertyDefinition def) {
+        String name;
+        switch (def.getPropertyClass()) {
+          case BOOLEAN:
+            name = "FLAG";
+            break;
+          case INTEGER:
+          case DOUBLE:
+            name = "NUMBER";
+            break;
+          case TEXT:
+            name = "TEXT";
+            break;
+          case DATE:
+            name = "DATE";
+            break;
+          default:
+            assert false : "Should not be here";
+            name = "TEXT";
+        }
+        for (int i = 1; i <= 30; i++) {
+          S tf1 = (S)Enum.valueOf(enumClass, name + String.valueOf(i));
+          if (mpxjFields.contains(tf1)) {
+            return tf1;
+          }
+        }
+        return null;
+      }
+    });
+
 
 Location on the code base: 
+code/biz.ganttproject.impex.msproject2/src/main/java/biz/ganttproject/impex/msproject2/CustomPropertyMapping.java
+
+Code Smell identification: 
+Switch Statements - Este código possui um "Switch statement" que verifica o tipo de um objeto e atribui um valor a 
+                    uma string com base no caso do swicth.
 
 
-Code Smell identification:
+Refactoring proposal: 
+
+Neste caso, onde procuramos diferenciar uma propriedade da classe, podiamos criar subclasses onde o metodo fosse implementado 
+de diferentes modos com base nessa propriedade. Esta tecnica de polimorfismo substituiria o "switch statement" por um simples
+"String name = def.getPropertyClass();"
 
 
-Refactoring proposal:
+################################################################################################
+
+Code Smell 2:
+
+Code Snippet:
+
+(...)
+
+public Object getID() {
+    return myID;
+  }
+
+  public Object getOldValue() {
+    return myOldValue;
+  }
+
+  public Object getNewValue() {
+    return myNewValue;
+  }
+
+  public Object getTriggerID() {
+    return myTriggerID;
+  }
+(...)
+
+
+Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/option/ChangeValueEvent.java
+
+Code Smell identification: Data Class
+
+Refactoring proposal: implementar mais funcionalidades na classe de modo a dar mais significado e funcionalidades à classe
+                      de modo a justificar a existencia da mesma.
+
+################################################################################################
+
+Code Smell 3:
+
+Code Snippet:
+
+(...)
+
+public void run() {
+    getUiFacade().getUndoManager().undoableEdit(ourLocalizer.formatText("importCalendar"), new Runnable() {
+
+(...
+)
+Location on the code base: code/biz.ganttproject.impex.ical/src/main/java/biz/ganttproject/impex/ical/IcsFileImporter.java
+
+Code Smell identification: Inappropriate Intimacy
+
+Refactoring proposal: Contruir um método na classe do método "getUiFacade" onde é chamado um método da classe do método 
+                      "getUndoManager", e por sua vez seria chamado o metodo "undoableEdit(...)" noutra classe. Em suma, em vez
+                      de ter um metodo que chama outro em assim sucessivamente dentro da mesma classe, estas chamadas seriam
+                      feitas em "escada".
+
+#####################################################################
+
+Code Smell 4:
+
+Code Snippet:
+
+
+Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/option/GPOption.java 
+
+
+Code Smell identification: Interface grande que pode ser subdividida em pelo menos 2 interfaces menores.
+
+
+Refactoring proposal: Criar uma interface, de nome "IAbstractOption.java" que seja implentada pela Classe "GDAbstractOption.java" onde são implementados 
+                    só álguns dos métodos das interface GDOption.java, que detém o code smell em causa. Num outro ficheiro,
+                    de nome "IOption.java", declaramos os métodos em falta, em comparação à Interface IAbstractOption. Deste modo
+                    a Interface GDOption.java seria repartida em duas interfaces ,a "IAbstractOption.java" e a "IOption.java", e uma implementada 
+                    pela class CDAbstract.java e outra pelas classes que extendem a classe CDAbstract.java, respetivamente. Isto é p 

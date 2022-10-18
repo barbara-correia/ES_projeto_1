@@ -1,9 +1,50 @@
 Pattern 1:
 
+Code Snippet: 
+    public interface BooleanOption extends GPOption<Boolean>
+    (...)
+    public interface DateOption extends GPOption<Date> 
+    (...)
+    public interface StringOption extends GPOption<String>
+    (...)
+    public interface FileOption extends StringOption 
+    (...)
+    public class DefaultDateOption extends GPAbstractOption<Date> implements DateOption
+    (...)
+    public class DefaultDoubleOption extends GPAbstractOption<Double> implements DoubleOption
+    (...)
+    public class DefaultEnumerationOption<T> extends GPAbstractOption<String> implements EnumerationOption
+    (...)
+    public class DefaultFileOption extends DefaultStringOption implements FileOption
+    (...)
+    public class DefaultFontOption extends GPAbstractOption<FontSpec> implements FontOption
+    (...)
+    public class DefaultIntegerOption extends GPAbstractOption<Integer> implements IntegerOption
+    (...)
+    public class DefaultMoneyOption extends GPAbstractOption<BigDecimal> implements MoneyOption
+    (...)
+    public class DefaultStringOption extends GPAbstractOption<String> implements StringOption
+    (...)
+    (Entre outras)
+
+
+Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/option
+
+
+Pattern identification: Facade - Na maior parte das classes presentes na pasta Option (localização da mesma acima) extendem
+                        uma classe principal/mãe (GPAbstractOption.java) e uma interface principal/mãe (GPOption.java).
+                        Assim a complexidade do código diminui e a diminui a necessidade da gestão do subsistema das Opções 
+                        por parte do cliente e assim resultando numa melhor e mais fácil comunicação entre as subclasses e 
+                        as classes do cliente.
+
+
+Pattern 2:
+
+
 Code Snippet:
 
 
-Location on the code base: 
-
+Location on the code base:
 
 Pattern identification:
+                        
