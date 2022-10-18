@@ -1,13 +1,6 @@
 Pattern 1:
 
 Code Snippet: 
-    public interface BooleanOption extends GPOption<Boolean>
-    (...)
-    public interface DateOption extends GPOption<Date> 
-    (...)
-    public interface StringOption extends GPOption<String>
-    (...)
-    public interface FileOption extends StringOption 
     (...)
     public class DefaultDateOption extends GPAbstractOption<Date> implements DateOption
     (...)
@@ -25,26 +18,137 @@ Code Snippet:
     (...)
     public class DefaultStringOption extends GPAbstractOption<String> implements StringOption
     (...)
-    (Entre outras)
+    (Entre outras classes)
 
 
 Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/option
 
 
-Pattern identification: Facade - Na maior parte das classes presentes na pasta Option (localização da mesma acima) extendem
-                        uma classe principal/mãe (GPAbstractOption.java) e uma interface principal/mãe (GPOption.java).
-                        Assim a complexidade do código diminui e a diminui a necessidade da gestão do subsistema das Opções 
-                        por parte do cliente e assim resultando numa melhor e mais fácil comunicação entre as subclasses e 
-                        as classes do cliente.
+Pattern identification:
+- Template Method: A class "GPAbstractOption" é extendida por grande parte da das classes da pasta "Option". A class GPAbstractOption
+implementa alguns métodos iguais para todas as suas subclasses mas estas implementam outros métodos que tem implementações diferentes, que
+variam de classe para classe de acordo com o objetivo e as necessidades do cliente. Assim reusa-se código (está na superclasse em vez de 
+estar em todas as subclasses, repetido) e torna o código mais flexível e versátil no caso de ser preciso fazer algum ajuste ou mudança.
 
-
+#########################################################################################################
 Pattern 2:
 
 
-Code Snippet:
+Code Snippet: 
+    (on TaskManagerImpt.java)
+
+        private final TaskImpl myRoot;
+
+        (...)
+
+        private TaskImpl createRootTask() {
+            Calendar c = CalendarFactory.newCalendar();
+            Date today = c.getTime();
+            TaskImpl root = new GanttTask(null, CalendarFactory.createGanttCalendar(today), 1, this, -1, "");
+            root.setStart(CalendarFactory.createGanttCalendar(today));
+            root.setDuration(createLength(getConfig().getTimeUnitStack().getDefaultTimeUnit(), 1));
+            root.setExpand(true);
+            root.setName("root");
+            return root;
+        }
+
+        (...)
+
+        public Date getProjectStart() {
+            if (myTaskMap.isEmpty()) {
+            return myRoot.getStart().getTime();
+            }
+            Result result = getAlgorithmCollection().getProjectBoundsAlgorithm().getBounds(tasksToActivities(myTaskMap.getTasks()));
+            return result.lowerBound;
+        }
+    (on PertChart.java)
+    
+        (...)
+
+        TaskManager myTaskManager;
+
+        (...)
+
+        public Date getStartDate() {
+            return myTaskManager.getProjectStart();
+        }
+
+
+        (...)
+
+    (on GanttTask.java)
+
+        (...)
+
+        public class GanttTask extends TaskImpl implements Serializable {
+
+            public GanttTask(String name, GanttCalendar start, long length, TaskManagerImpl taskManager, int taskID, @NotNull String taskUid) {
+                super(taskManager, taskID, taskUid);
+                setName(name);
+                setStart(start);
+                setDuration(taskManager.createLength(length));
+                enableEvents(true);
+            }
+        }
+
+        (...)
+
 
 
 Location on the code base:
 
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\task\TaskManagerImpl.java
+code\org.ganttproject.chart.pert\src\main\java\org\ganttproject\chart\pert\PertChart.java
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\GanttTask.java
+
+
+Pattern identification: 
+Command - A classe "TaskManagerImpl.java" funciona como classe de comandos entre muitas outras classes, entre elas a classe "PertChart.java" e 
+a classe "GanttTask.java" e estas duas classes, embora nunca tenham acesso à outra, conseguem comunicar entre si através da 
+classe "TaskManagerImpl.java".
+
+PS: Embora tenha sido atribuido o pattern Command, este exemplo também se puderá enquadrar no pattern Facade onde as classes q usam a classe
+"TaskManagerImpl.java" não tem acesso direto às classes comandadas por ela.
+
+Pattern 1:
+
+Code Snippet: 
+
+    (on UIFacade.java)
+        public interface UIFacade {
+            (... +/- 120 linhas de codigo ...)
+        }
+
+    (on UIFacadeImpl.java)
+
+    class UIFacadeImpl extends ProgressProvider implements UIFacade {
+        private final JFrame myMainFrame;
+        private final ScrollingManager myScrollingManager;
+        private final ZoomManager myZoomManager;
+        private final GanttStatusBar myStatusBar;
+        private final UIFacade myFallbackDelegate;
+        private final TaskSelectionManager myTaskSelectionManager;
+        private final List<GPOptionGroup> myOptionGroups = Lists.newArrayList();
+        private final GPOptionGroup myOptions;
+        private final LafOption myLafOption;
+        private final GPOptionGroup myLogoOptions;
+        private final DefaultFileOption myLogoOption;
+        private final NotificationManagerImpl myNotificationManager;
+        private final TaskView myTaskView = new TaskView();
+        private final DialogBuilder myDialogBuilder;
+        private final Map<String, Font> myOriginalFonts = Maps.newHashMap();
+        private final List<Runnable> myOnUpdateComponentTreeUiCallbacks = Lists.newArrayList();
+        private float myLastScale = 0;
+
+Location on the code base: 
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\gui\UIFacade.java
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\UIFacadeImpl.java
+
 Pattern identification:
+- Facade Method: A interface "UIFacade" implementa bastantes métodos que tem como objetivo alterar o estado de outras classes,
+que juntas formam o subsistema da da classe que a interface "UIFacade" implementa, a classe "UIFacadeImpl.java". Podemos 
+admitir que a maior parte das variáveis da classe "UIFacadeImpl.java" (acima, na secção 'Code Spinnet') são instancias 
+das suas subclasses. 
+
+
                         
