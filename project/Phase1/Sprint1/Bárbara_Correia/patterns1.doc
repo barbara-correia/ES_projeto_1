@@ -1,0 +1,108 @@
+Pattern 1:
+
+Code Snippet:
+
+public class UndoManagerImpl implements GPUndoManager {
+  @Override
+  public boolean canUndo() {
+    return mySwingUndoManager.canUndo();
+  }
+
+    (...)
+    
+  @Override
+  public void die() {
+    if (swingEditImpl != null) {
+      swingEditImpl.die();
+    }
+    if (mySwingUndoManager != null) {
+      mySwingUndoManager.discardAllEdits();
+    }
+    fireUndoReset();
+  }
+}
+
+Location on the code base: 
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\undo\UndoManagerImpl.java
+
+Pattern identification:
+Command pattern. Tis command pattern encapsulates a request as an object of its own. In this code Snippet
+are used methods from mySwingUndoManager, for example.
+
+
+Pattern 2:
+
+Code Snippet:
+
+on TaskContainmentHierarchyFacade.java:
+
+public interface TaskContainmentHierarchyFacade {
+  Task[] getNestedTasks(Task container);
+
+  Task[] getDeepNestedTasks(Task container);
+
+  boolean hasNestedTasks(Task container);
+
+  Task getRootTask();
+
+  Task getContainer(Task nestedTask);
+
+  (...)
+}
+
+Location on the code base: 
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\task\TaskContainmentHierarchyFacade.java
+
+Pattern identification:
+Facade Method. The TaskContainmentHierarchyFacade interface implements a lot of methods
+used to alter the state of other classes that together form a subsistem of the class.
+
+Pattern 3:
+
+Code Snippet:
+
+on DialogBuilder.java:
+
+OkAction proxy = new OkAction() {
+            // These two steps handel the case when focus is somewhere in text input
+            // and user hits Ctrl+Enter
+            // First we want to move focus to OK button to allow focus listeners, if any,
+            // to catch focusLost event
+            // Second, we want it to happen before original OkAction runs
+            // So we wrap original OkAction into proxy which moves focus and schedules "later" command
+            // which call the original action. Between them EDT sends out focusLost events.
+  (...)
+          };
+          _btn.setAction(proxy);
+          nextButton = _btn;
+
+on OkAction.java:
+
+public abstract class OkAction extends GPAction {
+  private boolean isDefault = true;
+
+  public OkAction() {
+    this("ok");
+  }
+
+  public OkAction(String key) {
+    super(key);
+  }
+
+  public boolean isDefault() {
+    return isDefault;
+  }
+
+  protected void setDefault(boolean value) {
+    isDefault = value;
+  }
+}
+
+Location on the code base: 
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\DialogBuilder.java
+code\ganttproject\src\main\java\net\sourceforge\ganttproject\action\OkAction.java
+
+
+Pattern identification:
+Proxy pattern. OkAction acts as a simplified, or lightweight version, of the original object, the class
+GPAction.
