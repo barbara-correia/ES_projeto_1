@@ -1,12 +1,113 @@
+author: @GoncaloRodri
+
 Code Smell 1:
 
 Code Snippet:
 
+  f.run0(new Function<CustomPropertyDefinition, S>() {
+        @Override
+        public S apply(@Nullable CustomPropertyDefinition def) {
+          String name;
+          switch (def.getPropertyClass()) {
+            case BOOLEAN:
+              name = "FLAG";
+              break;
+            case INTEGER:
+            case DOUBLE:
+              name = "NUMBER";
+              break;
+            case TEXT:
+              name = "TEXT";
+              break;
+            case DATE:
+              name = "DATE";
+              break;
+            default:
+              assert false : "Should not be here";
+              name = "TEXT";
+          }
+          for (int i = 1; i <= 30; i++) {
+            S tf1 = (S)Enum.valueOf(enumClass, name + String.valueOf(i));
+            if (mpxjFields.contains(tf1)) {
+              return tf1;
+            }
+          }
+          return null;
+        }
+      });
+
 
 Location on the code base: 
+  code/biz.ganttproject.impex.msproject2/src/main/java/biz/ganttproject/impex/msproject2/CustomPropertyMapping.java
+
+Code Smell identification: 
+  Switch Statements - Este código possui um "Switch statement" que verifica o tipo de um objeto e atribui um valor a 
+  uma string com base no caso do swicth.
 
 
-Code Smell identification:
+Refactoring proposal: 
+  Neste caso, onde procuramos diferenciar uma propriedade da classe, podiamos criar subclasses onde o metodo fosse implementado 
+  de diferentes modos com base nessa propriedade. Esta tecnica de polimorfismo substituiria o "switch statement" por um simples
+  "String name = def.getPropertyClass();"
 
+
+################################################################################################
+
+Code Smell 2:
+
+Code Snippet:
+
+  (...)
+
+  public Object getID() {
+      return myID;
+    }
+
+    public Object getOldValue() {
+      return myOldValue;
+    }
+
+    public Object getNewValue() {
+      return myNewValue;
+    }
+
+    public Object getTriggerID() {
+      return myTriggerID;
+    }
+  (...)
+
+
+Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/option/ChangeValueEvent.java
+
+Code Smell identification: 
+  Data Class - Esta classe é apenas usada para guardar valores, sem realizar qualquer alteração aos mesmos ou implementar 
+  quaisquer outras funcionalidades.
 
 Refactoring proposal:
+  Implementar mais funcionalidades na classe de modo a dar mais significado e funcionalidades à mesma,de modo a justificar 
+  a sua existencia. Caso isto não seja possível, no contexto do projeto, a existência desta classe não faz muito sentido e por 
+  isso sugiro que esta seja removida.
+
+################################################################################################
+
+Code Smell 3:
+
+Code Snippet:
+  (...)
+
+  public void run() {
+    getUiFacade().getUndoManager().undoableEdit(ourLocalizer.formatText("importCalendar"), new Runnable() {
+
+  (...)
+
+Location on the code base: 
+  code/biz.ganttproject.impex.ical/src/main/java/biz/ganttproject/impex/ical/IcsFileImporter.java
+
+Code Smell identification: 
+  Inappropriate Intimacy - Esta chamada invoca um método da classe que de seguida chama outro método da classe 
+  que foi retornada pelo primeiro método e que por sua vez chama outro método da classe que foi retornada pelo método anterior.
+
+Refactoring proposal: 
+  Construir um método na classe do método "getUiFacade" onde é chamado um método da classe do método  "getUndoManager", e por 
+  sua vez seria chamado o método "undoableEdit(...)" noutra classe. Em suma, em vez de ter um método que chama outro e assim 
+  sucessivamente dentro da mesma classe, estas chamadas seriam feitas em "escada", com a criação ou uso de classes.
