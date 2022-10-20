@@ -685,11 +685,13 @@ Location on the code base:
 code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/canvas/Canvas.java
 
 Code Smell identification: 
-  Large Class- A classe Canvas tem v·rias classes aninhadas tornando esta classe muito extensa (684 linhas). Apesar de as subclasses terem a sua funÁ„o nas operaÁıes da classe de topo este aninhamento, devido principalmente ‡ dimens„o que a classe adquire, torna o cÛdigo confuso e difÌcil de ler e temos v·rios objetos diferentes a serem representados e especificados nesta classe tornando-a muito complexa.
+  Large Class- A classe Canvas tem v√°rias classes aninhadas tornando esta classe muito extensa (684 linhas). 
+  Apesar de as subclasses terem a sua fun√ß√£o nas opera√ß√µes da classe de topo este aninhamento, devido principalmente √† dimens√£o que a classe adquire, 
+  torna o c√≥digo confuso e dif√≠cil de ler e temos v√°rios objetos diferentes a serem representados e especificados nesta classe tornando-a muito complexa.
 
 
 Refactoring proposal: 
-  Separar as classes aninhadas nas suas prÛprias classes e ficheiros e seguir uma hierarquia das classes relacionadas, por exemplo, Line È uma subclasse de Shape.
+  Separar as classes aninhadas nas suas pr√≥prias classes e ficheiros e seguir uma hierarquia das classes relacionadas, por exemplo, Line √© uma subclasse de Shape.
 
 
 ################################################################################################
@@ -733,7 +735,9 @@ public class ShapeConstants {
 Location on the code base: code/ biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/canvas/render/ShapeConstants.java
 
 Code Smell identification: 
-  Classe de constantes em vez de enumerado ñ Esta classe define uma espÈcie de lista de constantes em vez de usar, por exemplo, um enumerado, È uma classe que, para alÈm das constantes em si tem um array (PATTERN_LIST) destas constantes que e difÌcil de navegar, pois para obter uma constante em particular terÌamos de saber o seu index no array.
+  Classe de constantes em vez de enumerado - Esta classe define uma esp√©cie de lista de constantes em vez de usar, por exemplo, um enumerado, √© uma classe que, 
+  para al√©m das constantes em si tem um array (PATTERN_LIST) destas constantes que e dif√≠cil de navegar, pois para obter uma constante em particular ter√≠amos de saber 
+  o seu index no array.
 
 Refactoring proposal:
 	Transformar esta classe num enumerado ou definir as constantes nas classes que as utilizam.
@@ -806,8 +810,9 @@ Location on the code base:
 Code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/gantt/DependencySceneBuilder.java
 
 Code Smell identification: 
-  Large method- O mÈtodo drawDependencies() tal como outros nesta classe È bastante extenso( 52 linhas) tornando-o difÌcil de compreender e dificultando tambÈm a identificaÁ„o de possÌveis problemas.
+  Large method- O m√©todo drawDependencies() tal como outros nesta classe √© bastante extenso( 52 linhas) tornando-o dif√≠cil de compreender 
+  e dificultando tamb√©m a identifica√ß√£o de poss√≠veis problemas.
 
 Refactoring proposal: 
-  Criar alguns mÈtodos auxiliares para usar no corpo deste mÈtodo de modo a fatoriz·-lo em tarefas mais pequenas.
+  Criar alguns m√©todos auxiliares para usar no corpo deste m√©todo de modo a fatoriz√°-lo em tarefas mais pequenas.
 
