@@ -1,0 +1,113 @@
+Design Pattern 1
+
+Description:
+Object factory design pattern
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\CalendarFactory.java
+
+Code Snippet
+package biz.ganttproject.core.time;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public abstract class CalendarFactory {
+  public static interface LocaleApi {
+    Locale getLocale();
+    DateFormat getShortDateFormat();
+  }
+
+  private static LocaleApi ourLocaleApi;
+  
+  public static Calendar newCalendar() {
+    return (Calendar) Calendar.getInstance(ourLocaleApi.getLocale()).clone();
+  }
+  
+  protected static void setLocaleApi(LocaleApi localeApi) {
+    ourLocaleApi = localeApi;
+  }
+
+  public static GanttCalendar createGanttCalendar(Date date) {
+    return new GanttCalendar(date, ourLocaleApi);
+  }
+
+  public static GanttCalendar createGanttCalendar(int year, int month, int date) {
+    return new GanttCalendar(year, month, date, ourLocaleApi);
+  }
+
+  public static GanttCalendar createGanttCalendar() {
+    return new GanttCalendar(ourLocaleApi);
+  }
+}
+
+
+
+
+Design Pattern 2
+Template design pattern
+
+Description
+The TimeUnit interface and the respective implementation of TimeUnitImpl are a template of a time unit that is redifined in several other classes
+as needed
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\TimeUnit.java
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\TimeUnitImpl.java
+
+
+
+Design Pattern 3
+Facade design pattern
+
+Description:
+the class FramerImpl has as its main fucntion to redefine, alter or otherwise modify other classes
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\impl\FramerImpl.java
+
+Code Snippet:
+public class FramerImpl implements DateFrameable {
+  private final int myCalendarField;
+
+  public FramerImpl(int calendarField) {
+    myCalendarField = calendarField;
+  }
+
+  @Override
+  public Date adjustRight(Date baseDate) {
+    Calendar c = CalendarFactory.newCalendar();
+    c.setTime(baseDate);
+    clearFields(c);
+    c.add(myCalendarField, 1);
+    return c.getTime();
+  }
+
+  private void clearFields(Calendar c) {
+    for (int i = myCalendarField + 1; i <= Calendar.MILLISECOND; i++) {
+      c.clear(i);
+    }
+  }
+
+  @Override
+  public Date adjustLeft(Date baseDate) {
+    Calendar c = CalendarFactory.newCalendar();
+    c.setTime(baseDate);
+    clearFields(c);
+    // Date beforeClear = c.getTime();
+    // if (beforeClear.compareTo(c.getTime())==0) {
+    // c.add(Calendar.MILLISECOND, -1);
+    // }
+    return c.getTime();
+  }
+
+  @Override
+  public Date jumpLeft(Date baseDate) {
+    Calendar c = CalendarFactory.newCalendar();
+    c.setTime(baseDate);
+    c.add(myCalendarField, -1);
+    return c.getTime();
+  }
+}
