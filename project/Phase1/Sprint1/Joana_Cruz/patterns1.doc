@@ -22,7 +22,9 @@ public Object getState() {
 Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/render/TextLengthCalculatorImpl.java 
 
 Pattern identification:
-- Singleton – A classe estática State não pode ser instanciada sem uma instância da classe TextLengthCalculatorImpl,nesta outer classe é possível observar que pode haver uma única instância de State(myState)e que no método getState() só criamos novas instâncias de State se myState == null, se já existir uma instancia então retornamos o myState que é único.
+- Singleton – A classe estática State não pode ser instanciada sem uma instância da classe TextLengthCalculatorImpl,nesta outer classe é possível observar 
+que pode haver uma única instância de State(myState)e que no método getState() só criamos novas instâncias de State se myState == null, 
+se já existir uma instancia então retornamos o myState que é único.
 
 #########################################################################################################
 Pattern 2:
@@ -47,7 +49,10 @@ ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/can
 
 
 Pattern identification: 
-Factory Method- A classe Shape(com inicio na linha 63) aninhada na classe Canvas segue, com suas subclasses, um Factory Method Pattern. Shape define uma shape geral e depois outras classes que a estendem(direta ou indiretamente) como Rectangle e Line (entre outras) representam uma forma (shape) específica com alguns campos comuns e outros específicos de um retângulo e uma linha, respetivamente e mantendo o exemplo.
+Factory Method- A classe Shape(com inicio na linha 63) aninhada na classe Canvas segue, 
+com suas subclasses, um Factory Method Pattern. Shape define uma shape geral e depois outras classes que a estendem(direta ou indiretamente) 
+como Rectangle e Line (entre outras) representam uma forma (shape) específica com alguns campos comuns e outros específicos de um retângulo e uma linha, 
+respetivamente e mantendo o exemplo.
 
 #########################################################################################################
 Pattern 3:
@@ -90,5 +95,8 @@ ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/sce
 ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/BottomUnitSceneBuilder.java
 
 Pattern identification:
-- Templade Method – A interface SceneBuilder juntamente com a classe abstrata que a implementa, AbstractSceneBuilder, funcionam como a “receita” a seguir para construir uma cena, ou seja, são um template para que classes como DayGridSceneBuilder e BottomUnitSceneBuilder possam adaptar esta construção e algoritmo para construir um género específico de cena, no caso uma DayGrindScene e uma BottomUnitScene. Note-se que ainda existem mais classes que estendem AbstractSceneBuilder para criar outras variações de cenas através deste template.
+- Templade Method – A interface SceneBuilder juntamente com a classe abstrata que a implementa, AbstractSceneBuilder,
+funcionam como a “receita” a seguir para construir uma cena, ou seja, são um template para que classes como DayGridSceneBuilder e BottomUnitSceneBuilder
+possam adaptar esta construção e algoritmo para construir um género específico de cena, no caso uma DayGrindScene e uma BottomUnitScene. 
+Note-se que ainda existem mais classes na pasta "scene" que estendem AbstractSceneBuilder para criar outras variações de cenas através deste template.
                         
