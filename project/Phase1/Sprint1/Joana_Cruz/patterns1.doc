@@ -1,0 +1,94 @@
+﻿author: @JoanaRitaCruz
+
+Pattern 1:
+
+Code Snippet: 
+    (...)
+private State myState;
+    (...)
+public void setGraphics(Graphics2D g) {
+        this.myGraphics = g;
+        this.myState = null;
+    }
+    (...)
+public Object getState() {
+        if (this.myState == null) {
+            this.myState = new State(this.myGraphics.getFontRenderContext(), this.myGraphics.getFont());
+        }
+
+        return this.myState;
+    }
+
+Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/render/TextLengthCalculatorImpl.java 
+
+Pattern identification:
+- Singleton – A classe estática State não pode ser instanciada sem uma instância da classe TextLengthCalculatorImpl,nesta outer classe é possível observar que pode haver uma única instância de State(myState)e que no método getState() só criamos novas instâncias de State se myState == null, se já existir uma instancia então retornamos o myState que é único.
+
+#########################################################################################################
+Pattern 2:
+
+
+Code Snippet: 
+    public static class Shape
+       (...)
+    public static class Polygon extends Shape
+       (...)
+    public static class Rectangle extends Polygon
+       (...)
+    public static class Rhombus extends Polygon
+       (...)
+    public static class Arrow extends Shape
+	(...)
+    public static class Line extends Shape 
+       (...)
+       
+Location on the code base:
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/canvas/Canvas.java
+
+
+Pattern identification: 
+Factory Method- A classe Shape(com inicio na linha 63) aninhada na classe Canvas segue, com suas subclasses, um Factory Method Pattern. Shape define uma shape geral e depois outras classes que a estendem(direta ou indiretamente) como Rectangle e Line (entre outras) representam uma forma (shape) específica com alguns campos comuns e outros específicos de um retângulo e uma linha, respetivamente e mantendo o exemplo.
+
+#########################################################################################################
+Pattern 3:
+
+Code Snippet: 
+
+public interface SceneBuilder {
+  /**
+   * Resets this builder and sets scene height, which is a height of a user-visible viewport 
+   * of a chart
+   * 
+   * @param sceneHeight
+   */
+  void reset(int sceneHeight);
+  
+  /**
+   * Builds a scene 
+   */
+  void build();
+  
+  /**
+   * @return canvas instance
+   */
+  Canvas getCanvas();
+}
+       (...)
+public abstract class AbstractSceneBuilder implements SceneBuilder
+       (...)
+public class DayGridSceneBuilder extends AbstractSceneBuilder
+       (...)
+public class BottomUnitSceneBuilder extends AbstractSceneBuilder
+       (...)
+(Entre outras classes)
+
+Location on the code base: 
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/SceneBuilder.java
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/AbstractSceneBuilder.java
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/DayGridSceneBuilder.java
+ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/scene/BottomUnitSceneBuilder.java
+
+Pattern identification:
+- Templade Method – A interface SceneBuilder juntamente com a classe abstrata que a implementa, AbstractSceneBuilder, funcionam como a “receita” a seguir para construir uma cena, ou seja, são um template para que classes como DayGridSceneBuilder e BottomUnitSceneBuilder possam adaptar esta construção e algoritmo para construir um género específico de cena, no caso uma DayGrindScene e uma BottomUnitScene. Note-se que ainda existem mais classes que estendem AbstractSceneBuilder para criar outras variações de cenas através deste template.
+                        
