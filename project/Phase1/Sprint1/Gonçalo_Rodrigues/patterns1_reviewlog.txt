@@ -1,7 +1,9 @@
 Patterns' Reviews:
 
 Joana Cruz's review:
-
+Pattern 1 - Há uma pequena gralha na linha 28 "da das classes". Parece-me bem e acho que a forma como tiraste o cabeçalho das várias classes foi benéfica para a explicação deste padrão.
+Pattern 2-Parece-me tudo bem.
+Pattern 3-Tens o título como "Pattern 1" em vez de 3. Gralha na linha 149 "da da classe".
 
 Guilherme Santana's Review:
 
