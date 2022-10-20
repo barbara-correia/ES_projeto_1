@@ -1,7 +1,9 @@
 Code Smells' Reviews:
 
 Joana Cruz's review:
-
+Code Smell 1- Parece-me tudo perfeito.
+Code Smell 2- Na explicação deviamos dizer também que a classe só faz consultas ou só tem getter methods. Na Refactoring Proposal (linha 87 do documento) usas duas vezes a expressão "de modo", da segunda vez podias escrever "(...) à mesma e a justificar (...)".
+Code Smell 3- Também me parece tudo bem.
 
 Guilherme Santana's Review:
 
