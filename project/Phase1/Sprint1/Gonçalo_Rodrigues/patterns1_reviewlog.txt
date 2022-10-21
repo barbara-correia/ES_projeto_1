@@ -5,7 +5,7 @@ Pattern 1 - Há uma pequena gralha na linha 28 "da das classes". Parece-me bem e
 Pattern 2-Parece-me tudo bem.
 Pattern 3-Tens o título como "Pattern 1" em vez de 3. Gralha na linha 149 "da da classe".
 
-Guilherme Santana's Review:
+Gonçalo Gomes' Review:
 
 
 Bárbara Correia's Review:

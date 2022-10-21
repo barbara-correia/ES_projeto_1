@@ -1,0 +1,141 @@
+WILL BE TURNED INTO A .DOC LATER
+
+Code Smells
+
+Code Smell 1
+Reminder comment Smell:
+There is a TODO comment that warns that the method only works under certain circumstances
+
+Refactoring proposal:
+A precondition should be implemented or the method should be fixed to work properly under all circumstances.
+The coment should be removed, though only if the problem is fixed
+
+Location:
+C:\Users\psago\OneDrive\Ambiente de Trabalho\2022 2023 Semestre 1\ES\ES_projeto_1\biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
+
+Code Snippet
+@Override
+  public TimeUnit createTimeUnit(Date date) {
+    // TODO Only works if myBaseDate is not a TimeUnitFunctiongOfDateImpl!
+    // (Quarter -> Month -> Day fails!)
+    return new ParameterizedTimeUnitImpl(date);
+  }
+
+
+
+Code Smell 2
+Lack of comments:
+
+Refactoring proposal:
+Comment the code so that others can better understand what it does
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\
+
+
+
+Code Smell 3
+Large Method. The method has 94 lines and is hard to read and understand.
+
+Refactoring proposal:
+The method should be divided into smaller more concise sub-methods.
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\impl\GPTimeUnitStack
+
+Code Snippet:
+
+public TimeDuration parseDuration(String lengthAsString) throws ParseException {
+      int state = 0;
+      StringBuffer valueBuffer = new StringBuffer();
+      Integer currentValue = null;
+      TimeDuration currentLength = null;
+      lengthAsString += " ";
+      for (int i = 0; i < lengthAsString.length(); i++) {
+        char nextChar = lengthAsString.charAt(i);
+        if (Character.isDigit(nextChar)) {
+          switch (state) {
+          case 0:
+            if (currentValue != null) {
+              throw new ParseException(lengthAsString, i);
+            }
+            state = 1;
+            valueBuffer.setLength(0);
+          case 1:
+            valueBuffer.append(nextChar);
+            break;
+          case 2:
+            TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
+            if (timeUnit == null) {
+              throw new ParseException(lengthAsString, i);
+            }
+            assert currentValue != null;
+            TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
+            if (currentLength == null) {
+              currentLength = localResult;
+            } else {
+              if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
+                float recalculatedLength = currentLength.getLength(timeUnit);
+                currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
+              } else {
+                throw new ParseException(lengthAsString, i);
+              }
+            }
+            state = 1;
+            currentValue = null;
+            valueBuffer.setLength(0);
+            valueBuffer.append(nextChar);
+            break;
+          }
+        } else if (Character.isWhitespace(nextChar)) {
+          switch (state) {
+          case 0:
+            break;
+          case 1:
+            currentValue = Integer.valueOf(valueBuffer.toString());
+            state = 0;
+            break;
+          case 2:
+            TimeUnit timeUnit = findTimeUnit(valueBuffer.toString());
+            if (timeUnit == null) {
+              throw new ParseException(lengthAsString, i);
+            }
+            assert currentValue != null;
+            TimeDuration localResult = createLength(timeUnit, currentValue.floatValue());
+            if (currentLength == null) {
+              currentLength = localResult;
+            } else {
+              if (currentLength.getTimeUnit().isConstructedFrom(timeUnit)) {
+                float recalculatedLength = currentLength.getLength(timeUnit);
+                currentLength = createLength(timeUnit, localResult.getValue() + recalculatedLength);
+              } else {
+                throw new ParseException(lengthAsString, i);
+              }
+            }
+            state = 0;
+            currentValue = null;
+            break;
+          }
+        } else {
+          switch (state) {
+          case 1:
+            currentValue = Integer.valueOf(valueBuffer.toString());
+          case 0:
+            if (currentValue == null) {
+              throw new ParseException(lengthAsString, i);
+            }
+            state = 2;
+            valueBuffer.setLength(0);
+          case 2:
+            valueBuffer.append(nextChar);
+            break;
+          }
+        }
+      }
+      if (currentValue != null) {
+        currentValue = Integer.valueOf(valueBuffer.toString());
+        TimeUnit dayUnit = findTimeUnit("d");
+        currentLength = createLength(dayUnit, currentValue.floatValue());
+      }
+      return currentLength;
+    }

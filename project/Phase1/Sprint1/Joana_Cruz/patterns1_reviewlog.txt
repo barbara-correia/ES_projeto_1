@@ -4,6 +4,8 @@ Gonçalo Gomes's review:
 
 
 Gonçalo Rodrigues's Review:
+Design Pattern 2 - Exemplo de codigo curto; podia ter como exemplo e explicação uma parte de código onde a 'Factory' é implementada e usada. A explicação 
+                   por outro lado está bastante clara e esclarecedora.
 
 
 Guilherme Santana's Review:    
