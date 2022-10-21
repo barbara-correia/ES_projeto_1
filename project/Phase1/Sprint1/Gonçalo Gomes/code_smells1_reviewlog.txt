@@ -8,3 +8,4 @@ Code Smell 2: É um code smell, todos sentimos isso em varias classes do projeto
 um code Snippet,podes apanhar aquele comentario de cabeçalho e por algum metodo complexo que nao esteja comentado.
 
 Guilherme Santana
+Code Smell 3: O code smell esta bem identificado e um bom refactoring proposal tambem.
