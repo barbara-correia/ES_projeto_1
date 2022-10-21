@@ -26,9 +26,9 @@ Location on the code base:
 code\ganttproject\src\main\java\net\sourceforge\ganttproject\undo\UndoManagerImpl.java
 
 Pattern identification:
-Command pattern. Tis command pattern encapsulates a request as an object of its own. In this code Snippet
-are used methods from mySwingUndoManager, for example.
-
+Command pattern. This command pattern encapsulates a request as an object of its own. In this code Snippet
+are used methods from mySwingUndoManager, for example. The method die(), for example, calls the method
+die() from de class swingEditImpl.
 
 Pattern 2:
 
@@ -104,5 +104,5 @@ code\ganttproject\src\main\java\net\sourceforge\ganttproject\action\OkAction.jav
 
 
 Pattern identification:
-Proxy pattern. OkAction acts as a simplified, or lightweight version, of the original object, the class
+Proxy pattern. The class OkAction acts as a simplified, or lightweight version, of the original object, the class
 GPAction.

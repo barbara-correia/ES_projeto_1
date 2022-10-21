@@ -27,8 +27,9 @@ changes are in the return value and in the name of the Predicate.
 
 Refactoring proposal:
 A possible solution for this code smell is to use an if statement to alter the value of a variable
-to later return in a function using the same structure, as well as to decide what to name the Predicate.
-
+to later return in a function using the same structure, as well as to decide what to name the Predicate. 
+The variable used should have a boolean value. In conclusion, in the end we should have two static
+objects instead of one.
 
 Code Smell 2:
 
@@ -67,7 +68,8 @@ functionality, only getter methods.
 
 Refactoring proposal:
 In order to fix this code smell we would have to add some methods to this class that aren't 
-getters nor setters.
+getters nor setters. In case there aren't any methods to add, this class shouldn't exist.
+
 
 
 Code Smell 3:
@@ -92,8 +94,9 @@ Location on the code base:
 code\biz.ganttproject.core\src\main\java\biz\ganttproject\core\chart\scene\gantt\DependencySceneBuilder.java
 
 Code Smell identification:
-Long Method. This methond is very complex and it shouldn't be.
+Long Method. This method is very complex and it shouldn't be. This complexity makes it difficult to read the method
+and know what it does. 
 
 Refactoring proposal:
-To make this method more readable and shorter, one could create methods in each if statement which would 
-contain the code of the same region.
+To make this method more readable and shorter, one could create auxiliary methods in each if statement which would 
+contain the code of the same region. 
