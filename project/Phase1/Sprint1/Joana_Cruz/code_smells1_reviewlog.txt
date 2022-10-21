@@ -10,6 +10,4 @@ Code Smell 2 - A identificação do Code Smell parece estar bem. O 'Refactoring 
 Guilherme Santana's Review:    
 Code Smell 1 - 	Code Smell is well identified.
                 Mistake in the class's size. Exists 703 lines, counting with the enum VAlignment.
-			          "... dimensão que a classe adquire,..." - feels like the sentece is incompleted.
-			          Inexistence of the nested class acquire on canvas class.
                 Refactoring proposal: Its correct
