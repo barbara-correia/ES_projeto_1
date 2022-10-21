@@ -10,7 +10,8 @@ e por implementar a interface GPCalendarCalc, podia-se alterar o modo de organiz
 hierarquica, deste modo removendo o código morto.
 
 Gonçalo Gomes's Review:    
-
+Code Smell 1: Na descrição dizes "relatable" quando me parece que queres dizer "related" e são feitas referencias a números 
+de linhas que não são visíveis na imagem.
 
 
 Gonçalo Rodrigues's review: 
