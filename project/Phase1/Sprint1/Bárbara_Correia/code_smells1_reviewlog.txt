@@ -1,6 +1,11 @@
 Code Smells' Reviews:
 
 Guilherme Santana's Review:
+Code Smell 2 - 	The code Smell is well identifed
+		  This class has a static class built-in. 
+			Besides that this class only is implemented in the class TaskDependencyImpl.
+			Another solution is moving the getters to that class and reimplementing the Connector's class to be 
+			a new Vector class- the static class.
 
 Gonçalo Rodrigues's review:
 Code Smell 2- O tipo de code smell está bem identificado e explicado. Na secção 'Refactoring proposal' falta referir que 
