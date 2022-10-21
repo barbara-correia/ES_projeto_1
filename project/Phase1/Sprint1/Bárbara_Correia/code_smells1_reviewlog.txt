@@ -14,6 +14,11 @@ Code Smell 2- O tipo de code smell está bem identificado e explicado. Na secç�
 
 
 Joana Cruz's Review:
-Code Smell 1- Na Refactoring proposal acho importante mencionar que a variável que iriamos alterar, face ao que os métodos parecem estar a tentar fazer, devia ser do tipo booleano.  E tornar mais claro que em vez dos dois objetos estáticos e métodos passariamos a ter só um.
+Code Smell 1- Na Refactoring proposal acho importante mencionar que a variável que iriamos alterar, 
+face ao que os métodos parecem estar a tentar fazer, devia ser do tipo booleano.  
+E tornar mais claro que em vez dos dois objetos estáticos e métodos passariamos a ter só um.
 
-Code Smell 3- Na linha 95 do documento escreveste "methond" em vez de "method". Para além disso acho que deviamos explicar melhor o code smell, dizer por exemplo que esta complexidade dificulta a leitura e a perceção de quais os passos que o método faz. Também acho importante destacar que os novos métodos a criar com os pedaços de  cada if statement seriam métodos auxiliares.
+Code Smell 3- Na linha 95 do documento escreveste "methond" em vez de "method". 
+Para além disso acho que deviamos explicar melhor o code smell, dizer por exemplo que esta complexidade dificulta a leitura e a
+perceção de quais os passos que o método faz. Também acho importante destacar que os novos métodos a criar com os pedaços de cada
+if statement seriam métodos auxiliares.
