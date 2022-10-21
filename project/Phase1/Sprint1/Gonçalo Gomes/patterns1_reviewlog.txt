@@ -11,3 +11,4 @@ Pattern 2 - Não tens um Code Snippet, podes por pelo menos os cabeçalhos das i
 até apanhar alguns metodos ou variaveis de instancia se for relevante.
 
 Guilherme Santana:
+Pattern 3 - Acredito que não é um bom exemplo como pattern. A classe não é implementada em nenhuma outra classe do projeto.
