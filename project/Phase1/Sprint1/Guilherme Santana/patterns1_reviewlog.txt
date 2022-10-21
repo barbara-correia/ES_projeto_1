@@ -14,3 +14,5 @@ no código.
 
 
 Gonçalo Gomes's Review:
+Pattern 1: As imagens são demasiado confusas e difíceis de ler. Seria melhor mostar o código mais zoomed-out e 
+isolar as partes que demonstram o pattern a destacar
