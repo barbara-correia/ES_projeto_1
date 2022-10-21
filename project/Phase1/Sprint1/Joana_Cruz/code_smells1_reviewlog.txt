@@ -1,7 +1,7 @@
 Code Smells' Reviews:
 
 Gonçalo Gomes's review:
-
+Nada a acrescentar, não tem erros nem falhas nas expliações e estas são claras
 
 Gonçalo Rodrigues's Review:
 Code Smell 2 - A identificação do Code Smell parece estar bem. O 'Refactoring Proposal' embora curto, está claro, explícito e correto.
