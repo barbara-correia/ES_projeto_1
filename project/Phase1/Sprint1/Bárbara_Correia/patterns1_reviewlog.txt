@@ -9,6 +9,8 @@ Pattern 2: well identified.
 
 
 Joana Cruz's Review: 
-Pattern 1: A explicação esta um pouco confusa mas acho que e um perfeito exemplo deste pattern. Escreveste "Tis" em vez de "This". Acho que ficava mais claro se explicasses o que e que aqueles metodos de exemplo fazem com o objecto encapsulado.
+Pattern 1: A explicação esta um pouco confusa mas acho que e um perfeito exemplo deste pattern. 
+Escreveste "Tis" em vez de "This".  Acho que ficava mais claro se explicasses o que e que aqueles metodos 
+de exemplo fazem com o objecto encapsulado.
 Pattern 2: Explicação simples mas eficaz. Parece-me bem!
 Pattern 3:Só acrescentava "The class OKAction" na ultima frase em vez de começar só com "OKAction".
