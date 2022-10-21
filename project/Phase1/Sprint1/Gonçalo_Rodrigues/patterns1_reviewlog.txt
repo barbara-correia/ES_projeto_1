@@ -6,7 +6,7 @@ Pattern 2-Parece-me tudo bem.
 Pattern 3-Tens o título como "Pattern 1" em vez de 3. Gralha na linha 149 "da da classe".
 
 Gonçalo Gomes' Review:
-
+Nada a acrescentar aos comentários já feitos. De resto parece-me estar tudo correto
 
 Bárbara Correia's Review:
 Pattern 3- Devia ser "Pattern 3" em vez de "Pattern 1". Em vez de "da da classe" devia ser "da classe". De resto
