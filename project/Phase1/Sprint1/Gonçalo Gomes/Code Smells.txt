@@ -40,7 +40,7 @@ public class TimeUnitDateFrameableImpl extends TimeUnitImpl {
 }
 
 Location:
-C:\Users\psago\OneDrive\Ambiente de Trabalho\2022 2023 Semestre 1\ES\ES_projeto_1\biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
 
 Code Snippet
 @Override
