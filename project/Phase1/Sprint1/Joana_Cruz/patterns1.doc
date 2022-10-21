@@ -22,7 +22,7 @@ public Object getState() {
 Location on the code base: code/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/render/TextLengthCalculatorImpl.java 
 
 Pattern identification:
-- Singleton – A classe estática State não pode ser instanciada sem uma instância da classe TextLengthCalculatorImpl,nesta outer classe é possível observar 
+- Singleton – A classe estática State não pode ser instanciada sem uma instância da classe TextLengthCalculatorImpl,nesta Outer classe é possível observar 
 que pode haver uma única instância de State(myState)e que no método getState() só criamos novas instâncias de State se myState == null, 
 se já existir uma instancia então retornamos o myState que é único.
 
