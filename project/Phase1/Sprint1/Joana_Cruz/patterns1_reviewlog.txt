@@ -9,3 +9,4 @@ Design Pattern 2 - Exemplo de codigo curto; podia ter como exemplo e explicaçã
 
 
 Guilherme Santana's Review:    
+Pattern 3 - Bom exemplo do tipo de pattern e explicito como funciona de acordo este tipo 
