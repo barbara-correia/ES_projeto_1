@@ -1,6 +1,7 @@
 Patterns' Reviews:
 
 Gonçalo Gomes's review:
+Na identificação do primeiro pattern escreveste "outer" quando deveria ser "outra". De resto parece-me tudo correto
 
 
 Gonçalo Rodrigues's Review:
