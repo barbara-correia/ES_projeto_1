@@ -4,7 +4,10 @@ Joana Cruz's review:
 
 
 Bárbara Correia's Review:
-Pattern 2: Não me parece dos melhores exemplos para o Command Pattern. No entanto, não está mal.
+Pattern 2: Não me parece que seja um bom exemplo para o Command Pattern. O code snippet é confuso e não é 
+representativo. Apenas é utilizada uma invocação de um método criado na classe CommandLineExportApplication.java
+utilizando a um objeto CommandLineExportApplication. Para além disso as figuras estão trocadas na localização 
+no código.
 
 
 Gonçalo Gomes's Review:
