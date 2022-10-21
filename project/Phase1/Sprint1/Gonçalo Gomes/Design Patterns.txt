@@ -1,7 +1,8 @@
 Design Pattern 1
+Object factory design pattern
 
 Description:
-Object factory design pattern
+The class CalendarFactory implements methods used for the instantiation of other classes. By doing this, it hides certain aspects of the creation of the classes from the places that use them and it also makes the instantiation of these classes independant from those same users.
 
 Location:
 biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\CalendarFactory.java
