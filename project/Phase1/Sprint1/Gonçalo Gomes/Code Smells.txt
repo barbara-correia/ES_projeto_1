@@ -10,6 +10,35 @@ Refactoring proposal:
 A precondition should be implemented or the method should be fixed to work properly under all circumstances.
 The coment should be removed, though only if the problem is fixed
 
+Code Snippet:
+
+/**
+ * @author bard
+ */
+public class TimeUnitDateFrameableImpl extends TimeUnitImpl {
+  private final DateFrameable myFramer;
+
+  public TimeUnitDateFrameableImpl(String name, TimeUnitGraph timeUnitGraph, TimeUnit atomUnit, DateFrameable framer) {
+    super(name, timeUnitGraph, atomUnit);
+    myFramer = framer;
+  }
+
+  @Override
+  public Date adjustRight(Date baseDate) {
+    return myFramer.adjustRight(baseDate);
+  }
+
+  @Override
+  public Date adjustLeft(Date baseDate) {
+    return myFramer.adjustLeft(baseDate);
+  }
+
+  @Override
+  public Date jumpLeft(Date baseDate) {
+    return myFramer.jumpLeft(baseDate);
+  }
+}
+
 Location:
 C:\Users\psago\OneDrive\Ambiente de Trabalho\2022 2023 Semestre 1\ES\ES_projeto_1\biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
 
