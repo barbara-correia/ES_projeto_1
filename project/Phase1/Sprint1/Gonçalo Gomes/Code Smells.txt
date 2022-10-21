@@ -10,6 +10,29 @@ Refactoring proposal:
 A precondition should be implemented or the method should be fixed to work properly under all circumstances.
 The coment should be removed, though only if the problem is fixed
 
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
+
+Code Snippet:
+
+@Override
+  public TimeUnit createTimeUnit(Date date) {
+    // TODO Only works if myBaseDate is not a TimeUnitFunctiongOfDateImpl!
+    // (Quarter -> Month -> Day fails!)
+    return new ParameterizedTimeUnitImpl(date);
+  }
+
+
+
+Code Smell 2
+Lack of comments:
+
+Refactoring proposal:
+Comment the code so that others can better understand what it does
+
+Location:
+biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\
+
 Code Snippet:
 
 /**
@@ -38,28 +61,6 @@ public class TimeUnitDateFrameableImpl extends TimeUnitImpl {
     return myFramer.jumpLeft(baseDate);
   }
 }
-
-Location:
-biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\TimeUnitFunctionOfDateImpl.java
-
-Code Snippet
-@Override
-  public TimeUnit createTimeUnit(Date date) {
-    // TODO Only works if myBaseDate is not a TimeUnitFunctiongOfDateImpl!
-    // (Quarter -> Month -> Day fails!)
-    return new ParameterizedTimeUnitImpl(date);
-  }
-
-
-
-Code Smell 2
-Lack of comments:
-
-Refactoring proposal:
-Comment the code so that others can better understand what it does
-
-Location:
-biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\
 
 
 
