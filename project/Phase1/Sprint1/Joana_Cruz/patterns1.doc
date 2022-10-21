@@ -31,28 +31,85 @@ Pattern 2:
 
 
 Code Snippet: 
-    public static class Shape
+
+public class Canvas{
+  private ArrayList<Rectangle> myRectangles = new ArrayList<Rectangle>();
+
+  private ArrayList<Line> myLines = new ArrayList<Line>();
+
+  private ArrayList<Text> myTexts = new ArrayList<Text>();
+
+  private Map<Object, Shape> myModelObject2primitive = new WeakHashMap<Object, Shape>();
+
+       (...)
+    public static class Shape {
+       (...)
+       public Color getBackgroundColor() {
+      		return myBackgroundColor;
+    	}
+
+    	public void setBackgroundColor(Color myBackgroundColor) {
+      		this.myBackgroundColor = myBackgroundColor;
+    	}
        (...)
     public static class Polygon extends Shape
        (...)
-    public static class Rectangle extends Polygon
+    public static class Rectangle extends Polygon {
+       (...)
+       public Paint getBackgroundPaint() {
+      		return myPaint;
+    	}
+
+    	public void setBackgroundPaint(Paint paint) {
+      		myPaint = paint;
+    	}
+	
        (...)
     public static class Rhombus extends Polygon
        (...)
     public static class Arrow extends Shape
-	(...)
+       (...)
     public static class Line extends Shape 
        (...)
+    (De volta a classe Canvas)
+    public Rhombus createRhombus(int leftx, int topy, int diagWidth, int diagHeight) {
+    Rhombus rhombus = new Rhombus(leftx, topy, diagWidth, diagHeight);
+    myRhombusIndex.put(rhombus, rhombus.getLeftX(), rhombus.getBottomY(), rhombus.getWidth(), rhombus.getHeight());
+    return rhombus;
+  }
+
+  public Rectangle createRectangle(int leftx, int topy, int width, int height) {
+    Rectangle result = createDetachedRectangle(leftx, topy, width, height);
+    myRectangles.add(result);
+    return result;
+  }
+
+  public Rectangle createDetachedRectangle(int leftx, int topy, int width, int height) {
+    if (width < 0) {
+      width = -width;
+      leftx = leftx - width;
+    }
+    return new Rectangle(leftx + myDeltaX, topy + myDeltaY, width, height);
+  }
+
+  public Line createLine(int startx, int starty, int finishx, int finishy) {
+    Line result = new Line(startx + myDeltaX, starty + myDeltaY, finishx + myDeltaX, finishy + myDeltaY);
+    myLines.add(result);
+    return result;
+  }
+      (...)
        
 Location on the code base:
 ES_projeto_1/biz.ganttproject.core/src/main/java/biz/ganttproject/core/chart/canvas/Canvas.java
 
 
 Pattern identification: 
-Factory Method- A classe Shape(com inicio na linha 63) aninhada na classe Canvas segue, 
-com suas subclasses, um Factory Method Pattern. Shape define uma shape geral e depois outras classes que a estendem(direta ou indiretamente) 
-como Rectangle e Line (entre outras) representam uma forma (shape) específica com alguns campos comuns e outros específicos de um retângulo e uma linha, 
-respetivamente e mantendo o exemplo.
+Factory Method- A classe Canvas juntamente com a classe Shape(com inicio na linha 63) aninhada nesta, 
+segue com as suas subclasses um Factory Method Pattern. 
+Shape define uma shape geral e depois outras classes que a estendem(direta ou indiretamente) 
+como Rectangle e Line (entre outras) que representam uma forma (shape) específica com alguns campos comuns 
+e outros específicos de um retângulo e uma linha, respetivamente. A classe Canvas tem os métodos
+que criam os vários tipos de shapes de que a mesma necessita.
 
 #########################################################################################################
 Pattern 3:
