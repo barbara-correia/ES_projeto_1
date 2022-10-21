@@ -6,7 +6,7 @@ Code Smell 2- Na explicação deviamos dizer também que a classe só faz consul
 Code Smell 3- Também me parece tudo bem.
 
 Gonçalo Gomes' Review:
-
+Code Smell 1: Indicas qual é o code smell de forma clara e a proposta de resolução é boa, mas não explicas bem porque é que isso é um problema
 
 Bárbara Correia's Review:    
 Code Smell 3- Parece estar tudo bem. O code smell foi bem explicado assim como bem representado.
