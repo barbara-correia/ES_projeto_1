@@ -51,12 +51,39 @@ Design Pattern 2
 Template design pattern
 
 Description
-The TimeUnit interface and the respective implementation of TimeUnitImpl are a template of a time unit that is redifined in several other classes
+The TimeUnit interface and the respective implementation of TimeUnitImpl are a template of a time unit that is redefined in several other classes
 as needed
 
 Location:
 biz.ganttproject.core\src\main\java\biz\ganttproject\core\TimeUnit.java
 biz.ganttproject.core\src\main\java\biz\ganttproject\core\TimeUnitImpl.java
+
+Code Snippet:
+
+package biz.ganttproject.core.time;
+
+/**
+ * Created by IntelliJ IDEA.
+ * 
+ * @author bard Date: 31.01.2004
+ */
+public interface TimeUnit extends DateFrameable {
+  public String getName();
+
+  public boolean isConstructedFrom(TimeUnit unit);
+
+  /**
+   * @return number of atoms used to create current TimeUnit
+   * @throws UnsupportedOperationException
+   *           if current TimeUnit does not have constant number of atoms
+   */
+  public int getAtomCount(TimeUnit atomUnit);
+
+  /** @return the TimeUnit which is used to build the current TimeUnit */
+  public TimeUnit getDirectAtomUnit();
+
+  public int DAY = 0;
+}
 
 
 
@@ -64,7 +91,7 @@ Design Pattern 3
 Facade design pattern
 
 Description:
-the class FramerImpl has as its main fucntion to redefine, alter or otherwise modify other classes
+The class FramerImpl has as its main fucntion to redefine, alter or otherwise modify other classes
 
 Location:
 biz.ganttproject.core\src\main\java\biz\ganttproject\core\time\impl\FramerImpl.java
