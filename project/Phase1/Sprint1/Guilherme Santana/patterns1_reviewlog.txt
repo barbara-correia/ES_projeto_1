@@ -1,6 +1,9 @@
 Reviews:
 
-Joana Cruz's review:
+Gonçalo Rodrigues's review: 
+Desing Pattern 1 - 'Code Snippet' pedia dar informação mais completa e explícita. Tendo em conta a justificação dada
+na secção 'Pattern identification' o pattern está bem justificado embora torne difícil de entender devido ao ponto 
+antes referido.
 
 
 Barbara Correia's Review:

@@ -1,9 +1,13 @@
 Reviews:
 
-Joana Cruz's review:
-
-
 Barbara Correia's Review:
 
 
 Gonçalo Gomes's Review:    
+
+
+Gonçalo Rodrigues's review: 
+Code Smell 3 - Embora esta classe tenha poucas funcionalidades, não são todas getters. Como a classe tem tanto getters 
+               como setters. Se esta classe for usada como parametro, em vez de um longo parametro composto pelas 
+               variaveis guardadas pela classe em questão, isto já dá funcionalidade suficiente e justifica a sua existência.
+               
