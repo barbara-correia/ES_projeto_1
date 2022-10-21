@@ -4,6 +4,7 @@ Gonçalo Gomes's review:
 
 
 Gonçalo Rodrigues's Review:
+Code Smell 2 - A identificação do Code Smell parece estar bem. O 'Refactoring Proposal' embora curto, está claro, explícito e correto.
 
 
 Guilherme Santana's Review:    

@@ -1,9 +1,11 @@
 Code Smells' Reviews:
 
-Gonçalo Rodrigues's review:
-
-
 Guilherme Santana's Review:
+
+Gonçalo Rodrigues's review:
+Code Smell 2- O tipo de code smell está bem identificado e explicado. Na secção 'Refactoring proposal' falta referir que 
+             caso não haja possibilidade de adicionar métodos e funcionalidades para além dos getters, que a classe não 
+             devia existir.
 
 
 Joana Cruz's Review:
