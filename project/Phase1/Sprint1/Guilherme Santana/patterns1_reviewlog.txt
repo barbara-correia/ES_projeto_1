@@ -3,7 +3,8 @@ Reviews:
 Joana Cruz's review:
 
 
-Barbara Correia's Review:
+Bárbara Correia's Review:
+Pattern 2: Não me parece dos melhores exemplos para o Command Pattern. No entanto, não está mal.
 
 
 Gonçalo Gomes's Review:

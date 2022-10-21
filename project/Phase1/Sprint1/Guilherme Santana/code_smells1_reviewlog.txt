@@ -3,7 +3,10 @@ Reviews:
 Joana Cruz's review:
 
 
-Barbara Correia's Review:
-
+Bárbara Correia's Review:
+Code Smell 2: Bom exemplo do code smell Dead Code. No entanto, o Refactoring proposal não está muito completo.
+Poderia-se adicionar que, devido à classe AlwaysWorkingTimeCalendarImpl extender a classe GPCalendarBase 
+e por implementar a interface GPCalendarCalc, podia-se alterar o modo de organização da estrutura 
+hierarquica, deste modo removendo o código morto.
 
 Gonçalo Gomes's Review:    

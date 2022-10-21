@@ -1,0 +1,11 @@
+Design Patterns reviews:
+
+Bárbara Correia:
+O code snippet utilizado é um bom exemplo do design pattern Object factory. No entanto,
+a descricao carece de explicacao. Algo que se poderia ter dito seria: A class CalendarFactory apresenta
+metodos com criacoes de objetos. Desta forma, tem proposito esconder a criacao destes objetos, caracteristica
+do pattern Object Factory. Desta forma, o codigo cliente nao depende da class GanttCalendar.
+
+Joana Cruz:
+
+Guilherme Santana:
