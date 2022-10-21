@@ -9,3 +9,4 @@ Gonçalo Gomes' Review:
 
 
 Bárbara Correia's Review:    
+Code Smell 3- Parece estar tudo bem. O code smell foi bem explicado assim como bem representado.

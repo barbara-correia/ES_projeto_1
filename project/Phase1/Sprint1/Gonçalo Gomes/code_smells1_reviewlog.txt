@@ -1,6 +1,7 @@
 Code Smells reviews:
 
-Barbara Correia
+Bárbara Correia:
+Code Smell 1: Parece estar tudo bem. Bom exemplo do reminder comment smell, bem explicado e bom refactoring proposal.
 
 Joana Cruz
 
