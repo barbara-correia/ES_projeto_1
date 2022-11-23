@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.sourceforge.ganttproject.test.task.tag.TestTag" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-23T22:54:01" hostname="DESKTOP-V6820EQ" time="0.335">
+  <properties/>
+  <testcase name="removeTasks" classname="net.sourceforge.ganttproject.test.task.tag.TestTag" time="0.335"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
