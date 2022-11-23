@@ -58,7 +58,7 @@ public class TestTag {
         TaskManagerImpl manager = (TaskManagerImpl) TestSetupHelper.newTaskManagerBuilder().build();
         Task z = new GanttTask("z",calendar,10L,manager,-1);
         Task w = new GanttTask("z",calendar,10L,manager,-1);
-        Task y = new GanttTask("z",calendar,10L,manager,-1);
+        Task y = new GanttTask("z",calendar,10L,manager,-1);//
         Task u = new GanttTask("z",calendar,10L,manager,-1);
         Task v = new GanttTask("z",calendar,10L,manager,-1);
         Task o = new GanttTask("z",calendar,10L,manager,-1);
