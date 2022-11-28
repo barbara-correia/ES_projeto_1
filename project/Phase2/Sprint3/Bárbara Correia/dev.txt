@@ -1,1 +1,20 @@
-temp file for upload
+Use Case: Project Manager adds new task
+Description: The Project Manager creates a new task adding it to the app. creates a new task, adding it to the app.
+Main actor: Project Manager
+Secondary actors: None
+Pre-conditions: The name used for the created task does not match any of the names from the already existing tasks.
+Post-conditions: The task is now added. The task is now in the app and can be managed.
+
+Use Case: Project Manager removes a task
+Description: The Project Manager selects a task and removes it.
+Main actor: Project Manager
+Secondary actors: None
+Pre-conditions: The selected task exists.
+Post-conditions: The task is no longer on the app.
+
+Use Case: User edits a task
+Description: The Project Manager selects a task and edits it.
+Main actor: Project Manager
+Secondary actors: None
+Pre-conditions: The selected task exists.
+Post-conditions: The task is now edited.
