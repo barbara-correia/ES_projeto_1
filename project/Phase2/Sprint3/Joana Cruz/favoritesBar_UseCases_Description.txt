@@ -1,13 +1,13 @@
-Use Case: User marks a task as favorite
-Description: The user selects a task and marks it as favorite.
-Main actor: User
+Use Case: Project Manager marks a task as favorite
+Description: The Project Manager selects a task and marks it as favorite.
+Main actor: Project Manager
 Secondary actors: None  
 Pre-conditions: The selected task exists and it's not marked as favorite.
 Post-conditions: The task is now marked as favorite. The task is now in the favorites tab.
 
-Use Case: User unmarks a task as favorite
-Description: The user selects a task and unmarks it as favorite.
-Main actor: User
+Use Case: Project Manager unmarks a task as favorite
+Description: The Project Manager selects a task and unmarks it as favorite.
+Main actor: Project Manager
 Secondary actors: None  
 Pre-conditions: The selected task exists, it's marked as favorite and it's in the favorites tab.
 Post-conditions: The task is no longer marked as favorite, nor shown in the favorites tab.
