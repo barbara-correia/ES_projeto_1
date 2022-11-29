@@ -1,0 +1,10 @@
+Not sure if Edit Task extends Select Task or if it includes Select Task.
+
+Duplicated phrase on  Project Manager adds new task Use Case Description:
+"Description: The Project Manager creates a new task adding it to the app. creates a new task, adding it to the app."
+
+The Use Case Edit Task has User as Actor and not Project Manager
+
+In the Use Case Diagram the Use Cases should have the same name as in the description file.
+
+The Use Case Select Task is missing a description.
