@@ -173,6 +173,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
   private GanttChartTabContentPanel myGanttChartTabContent;
 
+  private FavoriteGanttChartTabContentPanel myFavoriteGanttChartTabContent;
+
   private ResourceChartTabContentPanel myResourceChartTabContent;
 
   private List<RowHeightAligner> myRowHeightAligners = Lists.newArrayList();
@@ -357,16 +359,19 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     System.err.println("4. creating views...");
 
-    //Favorites Tasks
-    myGanttChartTabContent = new GanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
-            getUIConfiguration());
-    getViewManager().createView(myGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/favorites_16.gif")));
-    getViewManager().toggleVisible(myGanttChartTabContent);
 
     myGanttChartTabContent = new GanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
             getUIConfiguration());
     getViewManager().createView(myGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/tasks_16.gif")));
     getViewManager().toggleVisible(myGanttChartTabContent);
+
+
+    //Favorites Tasks
+    myFavoriteGanttChartTabContent = new FavoriteGanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
+            getUIConfiguration());
+    getViewManager().createView(myFavoriteGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/favorites_16.gif")));
+    getViewManager().toggleVisible(myFavoriteGanttChartTabContent);
+
 
     myResourceChartTabContent = new ResourceChartTabContentPanel(getProject(), getUIFacade(), getResourcePanel(),
             getResourcePanel().area);
