@@ -100,25 +100,30 @@ public class TaskImpl implements Task {
 
   private boolean bExpand;
 
+  
   // private final TaskDependencyCollection myDependencies = new
   // TaskDependencyCollectionImpl();
   private final ResourceAssignmentCollectionImpl myAssignments;
-
+  
   private final TaskDependencySlice myDependencySlice;
-
+  
   private final TaskDependencySlice myDependencySliceAsDependant;
-
+  
   private final TaskDependencySlice myDependencySliceAsDependee;
-
+  
   private boolean myEventsEnabled;
-
+  
   private final TaskHierarchyItem myTaskHierarchyItem;
-
+  
   private ShapePaint myShape;
-
+  
   private Color myColor;
-
+  
   private String myNotes;
+  
+  //added
+  private boolean myFavorite;
+  //
 
   private MutatorImpl myMutator;
 
@@ -466,6 +471,13 @@ public class TaskImpl implements Task {
   public String getNotes() {
     return myNotes;
   }
+
+  //added
+  public boolean isFavorite(){
+    return myFavorite;
+  }
+  //
+
 
   @Override
   public ResourceAssignment[] getAssignments() {
@@ -862,7 +874,7 @@ public class TaskImpl implements Task {
       });
     }
 
-    @Override
+    
     public void addNotes(final String notes) {
       myCommands.add(new Runnable() {
         @Override
@@ -871,6 +883,20 @@ public class TaskImpl implements Task {
         }
       });
     }
+
+
+    //Added
+    @Override
+    public void setFavorite(final boolean favs) {
+      myCommands.add(new Runnable() {
+        @Override
+        public void run() {
+          TaskImpl.this.setFavorite(favs);
+        }
+      });
+    }
+
+    //
 
     @Override
     public int getCompletionPercentage() {
@@ -1005,6 +1031,11 @@ public class TaskImpl implements Task {
   @Override
   public void setThirdDateConstraint(int thirdDateConstraint) {
     myThirdDateConstraint = thirdDateConstraint;
+  }
+
+  @Override
+  public void setFavorite(boolean favorite) {
+    myFavorite = favorite;
   }
 
   @Override

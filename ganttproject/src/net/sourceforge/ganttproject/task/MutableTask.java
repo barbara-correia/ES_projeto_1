@@ -77,4 +77,7 @@ public interface MutableTask {
   void setTaskInfo(TaskInfo taskInfo);
 
   void setProjectTask(boolean projectTask);
+
+  //added
+  void setFavorite(boolean favorite);
 }

@@ -93,6 +93,9 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private JButton bWebLink;
 
+  //ADDED BY Gonçalo Rodrigues
+  private JCheckBox favoriteTask;
+
   private JSpinner percentCompleteSlider;
 
   private JComboBox priorityComboBox;
@@ -148,6 +151,12 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private final RoleManager myRoleManager;
 
+  //added
+  private boolean originalFavorite;
+  //
+
+  
+
   private Task myUnpluggedClone;
   private final TaskManager myTaskManager;
   private final IGanttProject myProject;
@@ -187,6 +196,15 @@ public class GanttTaskPropertiesBean extends JPanel {
       propertiesPanel.add(new JLabel(checkBox.first()));
       propertiesPanel.add(checkBox.second());
     }
+
+    //Added
+
+    propertiesPanel.add(new JLabel("Favoritos"));
+    favoriteTask = new JCheckBox();
+    propertiesPanel.add(favoriteTask);
+
+    //
+
     addEmptyRow(propertiesPanel);
 
     myTaskScheduleDates.insertInto(propertiesPanel);
@@ -238,6 +256,8 @@ public class GanttTaskPropertiesBean extends JPanel {
     bWebLink.setToolTipText(GanttProject.getToolTip(language.getText("openWebLink")));
     weblinkBox.add(bWebLink);
 
+    
+
     bWebLink.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -251,6 +271,9 @@ public class GanttTaskPropertiesBean extends JPanel {
     });
     propertiesPanel.add(new JLabel(language.getText("webLink")));
     propertiesPanel.add(weblinkBox);
+
+
+
 
     SpringUtilities.makeCompactGrid(propertiesPanel, propertiesPanel.getComponentCount() / 2, 2, 1, 1, 5, 5);
 
@@ -431,6 +454,12 @@ public class GanttTaskPropertiesBean extends JPanel {
             myTaskColorOption.getValue()));
       }
 
+      //added
+      if(this.originalFavorite != isFavorite()){
+        mutator.setFavorite(isFavorite());
+      }
+      //
+      
       mutator.commit();
       myDependenciesPanel.commit();
       myAllocationsPanel.commit();
@@ -550,6 +579,10 @@ public class GanttTaskPropertiesBean extends JPanel {
     return myThird;
   }
 
+  //added
+  private boolean isFavorite(){
+    return favoriteTask.isSelected();
+  }
 
 
   private void setThird(GanttCalendar third) {
@@ -570,6 +603,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     originalEarliestBeginDate = task.getThird();
     originalEarliestBeginEnabled = task.getThirdDateConstraint();
     originalIsProjectTask = task.isProjectTask();
+    originalFavorite = task.isFavorite();
   }
 
   private boolean canBeProjectTask(Task testedTask, TaskContainmentHierarchyFacade taskHierarchy) {
