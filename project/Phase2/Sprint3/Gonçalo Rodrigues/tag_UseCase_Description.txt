@@ -1,0 +1,13 @@
+Use Case: Project Manager adds task to filter
+Description: The Project Manager selects a task and adds it to the filter
+Main actor: Project Manager
+Secondary actors: None  
+Pre-conditions: The selected task exists and it was not added to the filter.
+Post-conditions: The task is now shown when the filter is selected.
+
+Use Case: Project Manager removes a task from the filter.
+Description: The Project Manager selects a task and removes it from the filter.
+Main actor: Project Manager
+Secondary actors: None  
+Pre-conditions: The selected task exists and it's on the filter's task list.
+Post-conditions: The task doesn't belong to the filter's task list and will not be shown when the filter is selected.
