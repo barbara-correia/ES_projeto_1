@@ -94,6 +94,8 @@ public class GanttTaskPropertiesBean extends JPanel {
   private JButton bWebLink;
 
   private JSpinner percentCompleteSlider;
+  //ADDED BY Gonçalo Rodrigues
+  private JCheckBox favoriteTask;
 
   private JComboBox priorityComboBox;
 
@@ -187,6 +189,14 @@ public class GanttTaskPropertiesBean extends JPanel {
       propertiesPanel.add(new JLabel(checkBox.first()));
       propertiesPanel.add(checkBox.second());
     }
+
+    //Added
+
+    propertiesPanel.add(new JLabel("Favoritos"));
+    favoriteTask = new JCheckBox();
+    propertiesPanel.add(favoriteTask);
+
+    //
     addEmptyRow(propertiesPanel);
 
     myTaskScheduleDates.insertInto(propertiesPanel);
