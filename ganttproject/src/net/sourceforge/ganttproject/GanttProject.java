@@ -333,6 +333,18 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       getResourcePanel().setTaskPropertiesAction(taskTree.getPropertiesAction());
       bar.add(mTask);
     }
+
+    //Added for taskMarker
+    {
+      TaskTreeUIFacade taskMarkerTree = getUIFacade().getTaskTree();
+      JMenu mTaskMarker = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("taskMarker"));
+      mTaskMarker.add(taskMarkerTree.getNewAction());
+      mTaskMarker.add(taskMarkerTree.getDeleteAction());
+      getResourcePanel().setTaskPropertiesAction(taskMarkerTree.getPropertiesAction());
+      bar.add(mTaskMarker);
+    }
+
+
     JMenu mHuman = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("human"));
     for (AbstractAction a : myResourceActions.getActions()) {
       mHuman.add(a);
@@ -345,12 +357,12 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     System.err.println("4. creating views...");
     myGanttChartTabContent = new GanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
-        getUIConfiguration());
+            getUIConfiguration());
     getViewManager().createView(myGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/tasks_16.gif")));
     getViewManager().toggleVisible(myGanttChartTabContent);
 
     myResourceChartTabContent = new ResourceChartTabContentPanel(getProject(), getUIFacade(), getResourcePanel(),
-        getResourcePanel().area);
+            getResourcePanel().area);
     getViewManager().createView(myResourceChartTabContent, new ImageIcon(getClass().getResource("/icons/res_16.gif")));
     getViewManager().toggleVisible(myResourceChartTabContent);
 
@@ -585,19 +597,19 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
    */
   private GPToolbar createToolbar() {
     ToolbarBuilder builder = new ToolbarBuilder()
-        .withHeight(40)
-        .withDpiOption(getUiFacadeImpl().getDpiOption())
-        .withLafOption(getUiFacadeImpl().getLafOption(), new Function<String, Float>() {
-          @Override
-          public Float apply(@Nullable String s) {
-            return (s.indexOf("nimbus") >= 0) ? 1.5f : 1f;
-          }
-        })
-        .withSquareButtons()
-        .withBorder(BorderFactory.createEmptyBorder(3, 3, 5, 3));
+            .withHeight(40)
+            .withDpiOption(getUiFacadeImpl().getDpiOption())
+            .withLafOption(getUiFacadeImpl().getLafOption(), new Function<String, Float>() {
+              @Override
+              public Float apply(@Nullable String s) {
+                return (s.indexOf("nimbus") >= 0) ? 1.5f : 1f;
+              }
+            })
+            .withSquareButtons()
+            .withBorder(BorderFactory.createEmptyBorder(3, 3, 5, 3));
     builder.addButton(new TestGanttRolloverButton(myProjectMenu.getOpenProjectAction().asToolbarAction()))
-        .addButton(new TestGanttRolloverButton(myProjectMenu.getSaveProjectAction().asToolbarAction()))
-        .addWhitespace();
+            .addButton(new TestGanttRolloverButton(myProjectMenu.getSaveProjectAction().asToolbarAction()))
+            .addWhitespace();
 
     final ArtefactAction newAction;
     {
@@ -671,14 +683,14 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     });
 
     builder.addButton(new TestGanttRolloverButton(deleteAction))
-        .addWhitespace()
-        .addButton(new TestGanttRolloverButton(propertiesAction))
-        .addButton(new TestGanttRolloverButton(getCutAction().asToolbarAction()))
-        .addButton(new TestGanttRolloverButton(getCopyAction().asToolbarAction()))
-        .addButton(new TestGanttRolloverButton(getPasteAction().asToolbarAction()))
-        .addWhitespace()
-        .addButton(new TestGanttRolloverButton(myEditMenu.getUndoAction().asToolbarAction()))
-        .addButton(new TestGanttRolloverButton(myEditMenu.getRedoAction().asToolbarAction()));
+            .addWhitespace()
+            .addButton(new TestGanttRolloverButton(propertiesAction))
+            .addButton(new TestGanttRolloverButton(getCutAction().asToolbarAction()))
+            .addButton(new TestGanttRolloverButton(getCopyAction().asToolbarAction()))
+            .addButton(new TestGanttRolloverButton(getPasteAction().asToolbarAction()))
+            .addWhitespace()
+            .addButton(new TestGanttRolloverButton(myEditMenu.getUndoAction().asToolbarAction()))
+            .addButton(new TestGanttRolloverButton(myEditMenu.getRedoAction().asToolbarAction()));
 
     JTextField searchBox = getSearchUi().getSearchField();
     //searchBox.setMaximumSize(new Dimension(searchBox.getPreferredSize().width, buttons.get(0).getPreferredSize().height));
@@ -717,8 +729,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       getStatusBar().setSecondText("");
     } else {
       getStatusBar().setSecondText(
-          language.getCorrectedLabel("task") + " : " + getTaskManager().getTaskCount() + "  "
-              + language.getCorrectedLabel("resources") + " : " + resp.nbPeople());
+              language.getCorrectedLabel("task") + " : " + getTaskManager().getTaskCount() + "  "
+                      + language.getCorrectedLabel("resources") + " : " + resp.nbPeople());
     }
   }
 
@@ -729,7 +741,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     Chart chart = getUIFacade().getActiveChart();
     if (chart == null) {
       getUIFacade().showErrorDialog(
-          "Failed to find active chart.\nPlease report this problem to GanttProject development team");
+              "Failed to find active chart.\nPlease report this problem to GanttProject development team");
       return;
     }
     try {
@@ -1110,7 +1122,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   public HumanResourceManager getHumanResourceManager() {
     if (myHumanResourceManager == null) {
       myHumanResourceManager = new HumanResourceManager(getRoleManager().getDefaultRole(),
-          getResourceCustomPropertyManager());
+              getResourceCustomPropertyManager());
       myHumanResourceManager.addView(this);
     }
     return myHumanResourceManager;
