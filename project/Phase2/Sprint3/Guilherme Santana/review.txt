@@ -1,0 +1,13 @@
+For all use cases, the main user can be the project manager and based on the group work, "Project Manager" would be more adequate. 
+Dont forget to complete the "-ainda a definir como -" fields.
+
+Use Case: Remove Filter/Label
+On 'Description', theres an sintax error: "a existen" -> "an existing";
+"For eacht..." -> "For each ..."
+Post-conditions: "... label was removed ..."
+
+Use Case: Assoceate Filter/Label to a task
+On 'Description', "Associates a existing label ...";
+
+
+Besides the things mentioned above, good work and keep it that way :)
