@@ -39,6 +39,7 @@ import java.awt.event.FocusEvent;
  */
 public class TagNewDialog {
 
+    private static final String PANEL_TITLE = "Adicionar etiqueta";
     private static final String ENTER_NAME = "Insira nome da etiqueta";
 
     private static final String TAG_COLOR = "Cor da etiqueta";
@@ -100,7 +101,7 @@ public class TagNewDialog {
                     change = false;
                 }
             };
-            myUIFacade.createDialog(contentPane, new Action[]{okAction, cancelAction}, "Tag").show();
+            myUIFacade.createDialog(contentPane, new Action[]{okAction, cancelAction}, PANEL_TITLE).show();
         }
     }
 

@@ -456,6 +456,7 @@ public class GanttTaskPropertiesBean extends JPanel {
         mutator.setTag(getTag());
         mutator.commit();
         if(this.originalTag != null) {
+          myTagManager.removeTaskFromTag(originalTag.getTagName(),selectedTasks[i]);
           if(!selectedTasks[i].isTagged()) {
             wasTagged = true;
           }
@@ -466,6 +467,8 @@ public class GanttTaskPropertiesBean extends JPanel {
 
       if(selectedTasks[i].isTagged()){
         mutator.setColor(getTag().getTagColor());
+        myTagManager.addTaskToTag(getTag().getTagName(),selectedTasks[i]);
+
      }else if(wasTagged) {
         mutator.setColor(myUIfacade.getGanttChart().getTaskDefaultColorOption().getValue());
       }else{
