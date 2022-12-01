@@ -19,16 +19,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 package net.sourceforge.ganttproject.gui.tags;
 
 import biz.ganttproject.core.option.*;
-import net.sourceforge.ganttproject.CustomPropertyManager;
 import net.sourceforge.ganttproject.action.CancelAction;
 import net.sourceforge.ganttproject.action.GPAction;
 import net.sourceforge.ganttproject.action.OkAction;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.options.OptionsPageBuilder;
 import net.sourceforge.ganttproject.language.GanttLanguage;
-import net.sourceforge.ganttproject.resource.HumanResource;
-import net.sourceforge.ganttproject.roles.Role;
-import net.sourceforge.ganttproject.roles.RoleManager;
 import net.sourceforge.ganttproject.task.Tag;
 import net.sourceforge.ganttproject.task.TagImpl;
 import org.jdesktop.swingx.JXHyperlink;
@@ -50,24 +46,20 @@ public class TagDialog {
 
     private final GPOptionGroup myGroup;
 
-    private ColorOption tagColorOption = new DefaultColorOption("");
+    private ColorOption tagColorOption = new DefaultColorOption("Cor da etiqueta");
+
     private final UIFacade myUIFacade;
 
-    private final GPAction mySetDefaultColorAction = new GPAction("defaultColor") {
+   /* private final GPAction mySetDefaultColorAction = new GPAction("defaultColor") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            tagColorOption.setValue(myUIFacade.getGanttChart().getTaskDefaultColorOption().getValue());
+            tagColorOption.setValue(Color.red);
         }
-    };
+    };*/
 
     public TagDialog(UIFacade uiFacade) {
         myUIFacade = uiFacade;
-        Role[] enabledRoles = RoleManager.Access.getInstance().getEnabledRoles();
-        String[] roleFieldValues = new String[enabledRoles.length];
-        for (int i = 0; i < enabledRoles.length; i++) {
-            roleFieldValues[i] = enabledRoles[i].getName();
-        }
-        myGroup = new GPOptionGroup("", new GPOption[]{myNameField, tagColorOption});
+        myGroup = new GPOptionGroup("", new GPOption[]{myNameField});
         myGroup.setTitled(false);
     }
 
@@ -99,6 +91,7 @@ public class TagDialog {
 
     private void loadFields() {
         myNameField.setValue("Enter tag name");
+        tagColorOption.setValue(Color.red);
     }
 
     private Component getComponent() {
@@ -112,16 +105,14 @@ public class TagDialog {
         builder.setI18N(i18n);
         final JComponent mainPage = builder.buildPlanePage(new GPOptionGroup[]{myGroup});
         mainPage.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        tabbedPane = new JTabbedPane();
-        tabbedPane.addTab(language.getText("general"), new ImageIcon(getClass().getResource("/icons/properties_16.gif")),
-                mainPage);
-
+        builder.setUiFacade(myUIFacade);
         JPanel colorBox = new JPanel(new BorderLayout(5, 0));
-
-        colorBox.add(builder.createColorComponent(tagColorOption).getJComponent(), BorderLayout.WEST);
-        colorBox.add(new JXHyperlink(mySetDefaultColorAction), BorderLayout.CENTER);
-        tabbedPane.add(new JLabel(language.getText("colors")));
-        tabbedPane.add(colorBox);
+        colorBox.add(new JLabel("Cor da etiqueta: ", JLabel.LEFT));
+        colorBox.add(builder.createColorComponent(tagColorOption).getJComponent(), BorderLayout.EAST);
+        mainPage.add(colorBox);
+        tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Criar", new ImageIcon(getClass().getResource("/icons/properties_16.gif")),
+                mainPage);
         tabbedPane.addFocusListener(new FocusAdapter() {
             boolean isFirstTime = true;
 
@@ -144,9 +135,8 @@ public class TagDialog {
     }
 
     private void applyChanges() {
-        //tag.setName(myNameField.getValue());
-        Color color = JColorChooser.showDialog(this.getComponent(), "Select a color", Color.red);
-        //tag.setColor(color);
-        Tag nTag = new TagImpl(myNameField.getValue(), color);
+        Tag nTag = new TagImpl(myNameField.getValue(), tagColorOption.getValue());
+        //por tag manager
     }
 }
+
