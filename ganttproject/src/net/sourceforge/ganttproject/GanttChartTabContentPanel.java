@@ -123,7 +123,5 @@ class GanttChartTabContentPanel extends ChartTabContentPanel implements GPView {
   }
 
   @Override
-  public Component getViewComponent() {
-    return getComponent();
-  }
+  public Component getViewComponent() { return getComponent();}
 }

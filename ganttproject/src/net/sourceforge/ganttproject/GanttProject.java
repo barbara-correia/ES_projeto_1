@@ -359,27 +359,24 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     System.err.println("4. creating views...");
 
-
     myGanttChartTabContent = new GanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
             getUIConfiguration());
     getViewManager().createView(myGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/tasks_16.gif")));
     getViewManager().toggleVisible(myGanttChartTabContent);
 
 
-    /*
+    myResourceChartTabContent = new ResourceChartTabContentPanel(getProject(), getUIFacade(), getResourcePanel(),
+            getResourcePanel().area);
+    getViewManager().createView(myResourceChartTabContent, new ImageIcon(getClass().getResource("/icons/res_16.gif")));
+    getViewManager().toggleVisible(myResourceChartTabContent);
+
     //Favorites Tasks
     myFavoriteGanttChartTabContent = new FavoriteGanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
             getUIConfiguration());
     getViewManager().createView(myFavoriteGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/favorites_16.gif")));
     getViewManager().toggleVisible(myFavoriteGanttChartTabContent);
 
-     */
 
-
-    myResourceChartTabContent = new ResourceChartTabContentPanel(getProject(), getUIFacade(), getResourcePanel(),
-            getResourcePanel().area);
-    getViewManager().createView(myResourceChartTabContent, new ImageIcon(getClass().getResource("/icons/res_16.gif")));
-    getViewManager().toggleVisible(myResourceChartTabContent);
 
 
     addComponentListener(new ComponentAdapter() {
@@ -638,20 +635,24 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
         }
       }, new Action[]{taskNewAction, resourceNewAction});
       final TestGanttRolloverButton bNewTask = new TestGanttRolloverButton(taskNewAction);
-      final TestGanttRolloverButton bnewResource = new TestGanttRolloverButton(resourceNewAction);
-      builder.addButton(bNewTask).addButton(bnewResource);
+      final TestGanttRolloverButton bNewResource = new TestGanttRolloverButton(resourceNewAction);
+
+      builder.addButton(bNewTask).addButton(bNewResource);
       getTabs().addChangeListener(new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent changeEvent) {
           switch (getTabs().getSelectedIndex()) {
             case UIFacade.GANTT_INDEX:
               bNewTask.setVisible(true);
-              bnewResource.setVisible(false);
+              bNewResource.setVisible(false);
               return;
             case UIFacade.RESOURCES_INDEX:
               bNewTask.setVisible(false);
-              bnewResource.setVisible(true);
+              bNewResource.setVisible(true);
               return;
+            case UIFacade.FAVORITE_INDEX:
+              bNewTask.setVisible(false);
+              bNewResource.setVisible((false));
           }
         }
       });

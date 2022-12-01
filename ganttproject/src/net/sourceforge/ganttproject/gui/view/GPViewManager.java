@@ -45,4 +45,5 @@ public interface GPViewManager {
   public void activatePrevView();
 
   public void toggleVisible(GPView view);
+
 }

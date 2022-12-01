@@ -19,13 +19,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 package net.sourceforge.ganttproject;
 
 import com.google.common.base.Function;
-import net.sourceforge.ganttproject.action.BaselineDialogAction;
-import net.sourceforge.ganttproject.action.CalculateCriticalPathAction;
 import net.sourceforge.ganttproject.chart.Chart;
 import net.sourceforge.ganttproject.chart.overview.GPToolbar;
 import net.sourceforge.ganttproject.chart.overview.ToolbarBuilder;
 import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.gui.UIFacade;
+import net.sourceforge.ganttproject.gui.view.GPFavoriteView;
 import net.sourceforge.ganttproject.gui.view.GPView;
 
 import javax.annotation.Nullable;
@@ -46,24 +45,10 @@ class FavoriteGanttChartTabContentPanel extends ChartTabContentPanel implements 
         myTreeFacade = treeFacade;
         myTaskTree = (Container) treeFacade.getTreeComponent();
         myGanttChart = ganttChart;
-
+        // FIXME KeyStrokes of these 2 actions are not working...
+        addTableResizeListeners(myTaskTree, myTreeFacade.getTreeTable().getScrollPane().getViewport());
     }
 
-    private Component createSchedulePanel() {
-        return new ToolbarBuilder()
-                .withDpiOption(myWorkbenchFacade.getDpiOption())
-                .withLafOption(getUiFacade().getLafOption(), new Function<String, Float>() {
-                    @Override
-                    public Float apply(@Nullable String s) {
-                        return (s.indexOf("nimbus") >= 0) ? 2f : 1f;
-                    }
-                })
-                .withGapFactory(ToolbarBuilder.Gaps.VDASH)
-                .withBackground(myWorkbenchFacade.getGanttChart().getStyle().getSpanningHeaderBackgroundColor())
-                .withHeight(24)
-                .build()
-                .getToolbar();
-    }
 
     JComponent getComponent() {
         if (myComponent == null) {
@@ -75,7 +60,7 @@ class FavoriteGanttChartTabContentPanel extends ChartTabContentPanel implements 
     @Override
     protected Component createButtonPanel() {
         ToolbarBuilder builder = new ToolbarBuilder()
-                .withHeight(24)
+                .withHeight(24)  //barra de comandos do painel lateral
                 .withSquareButtons()
                 .withDpiOption(myWorkbenchFacade.getDpiOption())
                 .withLafOption(myWorkbenchFacade.getLafOption(), new Function<String, Float>() {
@@ -84,7 +69,6 @@ class FavoriteGanttChartTabContentPanel extends ChartTabContentPanel implements 
                         return (s.indexOf("nimbus") >= 0) ? 2f : 1f;
                     }
                 });
-        myTreeFacade.addToolbarActions(builder);
         final GPToolbar toolbar = builder.build();
         return toolbar.getToolbar();
     }
@@ -115,7 +99,5 @@ class FavoriteGanttChartTabContentPanel extends ChartTabContentPanel implements 
     }
 
     @Override
-    public Component getViewComponent() {
-        return getComponent();
-    }
+    public Component getViewComponent() { return getComponent();}
 }
