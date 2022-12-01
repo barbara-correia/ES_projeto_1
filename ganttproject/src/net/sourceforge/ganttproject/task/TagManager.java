@@ -22,4 +22,7 @@ public interface TagManager {
 
     //Adds a new tag to the system
     public boolean addTag(Tag tag);
+
+    //Removes a tag from the system
+    public boolean removeTag(String tagName);
 }
