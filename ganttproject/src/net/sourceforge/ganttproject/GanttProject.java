@@ -1,17 +1,14 @@
 /*
 GanttProject is an opensource project management tool.
 Copyright (C) 2002-2011 Alexandre Thomas, Dmitry Barashev, GanttProject Team
-
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 3
 of the License, or (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -38,6 +35,7 @@ import net.sourceforge.ganttproject.action.ArtefactNewAction;
 import net.sourceforge.ganttproject.action.ArtefactPropertiesAction;
 import net.sourceforge.ganttproject.action.GPAction;
 import net.sourceforge.ganttproject.action.edit.EditMenu;
+import net.sourceforge.ganttproject.action.favorites.FavoritesAction;
 import net.sourceforge.ganttproject.action.help.HelpMenu;
 import net.sourceforge.ganttproject.action.project.ProjectMenu;
 import net.sourceforge.ganttproject.action.resource.ResourceActionSet;
@@ -62,6 +60,7 @@ import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.UIUtil;
 import net.sourceforge.ganttproject.gui.scrolling.ScrollingManager;
+import net.sourceforge.ganttproject.gui.tags.TagNewAction;
 import net.sourceforge.ganttproject.importer.Importer;
 import net.sourceforge.ganttproject.io.GPSaver;
 import net.sourceforge.ganttproject.io.GanttXMLOpen;
@@ -76,11 +75,7 @@ import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.resource.ResourceEvent;
 import net.sourceforge.ganttproject.resource.ResourceView;
 import net.sourceforge.ganttproject.roles.RoleManager;
-import net.sourceforge.ganttproject.task.CustomColumnsStorage;
-import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
-import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.TaskManagerConfig;
-import net.sourceforge.ganttproject.task.TaskManagerImpl;
+import net.sourceforge.ganttproject.task.*;
 
 import javax.annotation.Nullable;
 import javax.swing.*;
@@ -158,6 +153,16 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   private final ZoomActionSet myZoomActions;
 
   private final TaskManager myTaskManager;
+
+  /**
+   * Tag manager
+   */
+  private final TagManager myTagManager;
+
+  /**
+   * Favorite manager
+   */
+  private final FavoritesManager myFavoritesManager;
 
   private final FacadeInvalidator myFacadeInvalidator;
 
@@ -271,7 +276,9 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     getActiveCalendar().addListener(myTaskManager.getCalendarListener());
     ImageIcon icon = new ImageIcon(getClass().getResource("/icons/ganttproject.png"));
     setIconImage(icon.getImage());
+    myTagManager = new TagManagerImpl();
 
+    myFavoritesManager = new FavoritesManagerImpl();
 
     myFacadeInvalidator = new FacadeInvalidator(getTree().getModel(), myRowHeightAligners);
     getProject().addProjectEventListener(myFacadeInvalidator);
@@ -336,16 +343,20 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       bar.add(mTask);
     }
 
-    //Added for taskMarker
+    //Added for tags
     {
       TaskTreeUIFacade taskMarkerTree = getUIFacade().getTaskTree();
-      JMenu mTaskMarker = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("taskMarker"));
-      mTaskMarker.add(taskMarkerTree.getNewAction());
-      mTaskMarker.add(taskMarkerTree.getDeleteAction());
-      getResourcePanel().setTaskPropertiesAction(taskMarkerTree.getPropertiesAction());
+      JMenu mTaskMarker = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));
+      mTaskMarker.add(new TagNewAction(getTagManager(),getUIFacade()));
       bar.add(mTaskMarker);
     }
 
+    {
+      JMenu mFavorites = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Favoritos"));
+      Action pop = new FavoritesAction("Mostar lista de favoritos", this.myFavoritesManager, this.getUIFacade());
+      mFavorites.add(pop);
+      bar.add(mFavorites);
+    }
 
     JMenu mHuman = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("human"));
     for (AbstractAction a : myResourceActions.getActions()) {
@@ -1148,6 +1159,11 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   @Override
   public TaskManager getTaskManager() {
     return myTaskManager;
+  }
+
+  @Override
+  public TagManager getTagManager() {
+    return myTagManager;
   }
 
   @Override

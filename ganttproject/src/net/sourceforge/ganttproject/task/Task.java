@@ -116,6 +116,18 @@ public interface Task extends MutableTask {
 
   Priority getPriority();
 
+  /**
+   * Returns this tasks single tag if tagged
+   * @return Tag object or null
+   */
+  Tag getTag();
+
+  /**
+   * Checks if this Task is tagged or not
+   * @return true if task is taggeg false if not
+   */
+  boolean isTagged();
+
   List<TaskActivity> getActivities();
 
   GanttCalendar getStart();
