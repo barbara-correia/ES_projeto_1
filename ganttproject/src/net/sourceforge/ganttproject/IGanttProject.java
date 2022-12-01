@@ -29,6 +29,7 @@ import net.sourceforge.ganttproject.document.Document.DocumentException;
 import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.roles.RoleManager;
+import net.sourceforge.ganttproject.task.TagManager;
 import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
 import net.sourceforge.ganttproject.task.TaskManager;
 
@@ -63,6 +64,12 @@ public interface IGanttProject {
   RoleManager getRoleManager();
 
   TaskManager getTaskManager();
+
+  /**
+   * Returns project tagManager
+   * @return a TagManager object
+   */
+  TagManager getTagManager();
 
   TaskContainmentHierarchyFacade getTaskContainment();
 

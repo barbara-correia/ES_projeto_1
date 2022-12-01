@@ -22,9 +22,9 @@ public class TestTag {
         Task w = new GanttTask("z",calendar,10L,manager,-1);
         Task y = new GanttTask("z",calendar,10L,manager,-1);
 
-        a.tagTask(z);
-        b.tagTask(w);
-        b.tagTask(y);
+        a.addTagToTask(z);
+        b.addTagToTask(w);
+        b.addTagToTask(y);
 
         assert(a.getNumberOfTaggedTasks() == 1);
         assert (b.getNumberOfTaggedTasks() == 2);
@@ -63,12 +63,12 @@ public class TestTag {
         Task v = new GanttTask("z",calendar,10L,manager,-1);
         Task o = new GanttTask("z",calendar,10L,manager,-1);
 
-        a.tagTask(z);
-        a.tagTask(u);
-        a.tagTask(v);
-        b.tagTask(w);
-        b.tagTask(y);
-        b.tagTask(o);
+        a.addTagToTask(z);
+        a.addTagToTask(u);
+        a.addTagToTask(v);
+        b.addTagToTask(w);
+        b.addTagToTask(y);
+        b.addTagToTask(o);
 
         assert(a.getNumberOfTaggedTasks() == 3);
         assert(b.getNumberOfTaggedTasks() == 3);

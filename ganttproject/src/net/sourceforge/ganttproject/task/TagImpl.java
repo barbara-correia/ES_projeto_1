@@ -1,34 +1,49 @@
 package net.sourceforge.ganttproject.task;
+import java.awt.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TagImpl implements Tag{
+import javax.swing.*;
+
+public class TagImpl implements Tag {
 
     private String name;
+    private Color color;
     private List<Task> taggedTasks;
 
-    public TagImpl(String name){
+    public TagImpl(String name, Color color) {
         this.name = name;
         this.taggedTasks = new LinkedList<Task>();
+        this.color = color;
     }
-    public String getTagName(){
+
+    public String getTagName() {
         return name;
     }
 
-    public boolean tagTask(Task task){
+    @Override
+    public Color getTagColor() {
+        return this.color;
+    }
+
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    public boolean addTagToTask(Task task) {
         return taggedTasks.add(task);
     }
 
-    public boolean removeTaskFromTag(Task task){
+    public boolean removeTaskFromTag(Task task) {
         return taggedTasks.remove(task);
     }
 
-    public Iterator<Task> getTaggedTasks(){
+    public Iterator<Task> getTaggedTasks() {
         return taggedTasks.iterator();
     }
 
-    public int getNumberOfTaggedTasks(){
+    public int getNumberOfTaggedTasks() {
         return taggedTasks.size();
     }
 }

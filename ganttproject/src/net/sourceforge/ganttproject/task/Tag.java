@@ -1,6 +1,6 @@
 package net.sourceforge.ganttproject.task;
-import net.sourceforge.ganttproject.task.Task;
 
+import java.awt.*;
 import java.util.Iterator;
 /*
 Represents a tag that allows us to filter tasks
@@ -11,10 +11,16 @@ public interface Tag {
      */
     public String getTagName();
 
+    /**
+     * Return the color of the tag
+     * @return
+     */
+    public Color getTagColor();
+
     /*
     Adds a new task to this tag
      */
-    public boolean tagTask(Task task);
+    public boolean addTagToTask(Task task);
 
     /*
     Removes a task from tag

@@ -34,11 +34,7 @@ import net.sourceforge.ganttproject.gui.options.model.GP1XOptionConverter;
 import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.roles.RoleManager;
-import net.sourceforge.ganttproject.task.CustomColumnsManager;
-import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
-import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.TaskManagerConfig;
+import net.sourceforge.ganttproject.task.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -53,6 +49,11 @@ public class GanttProjectImpl implements IGanttProject {
   private String myOrganization;
   private String myWebLink;
   private final TaskManager myTaskManager;
+
+  /**
+   * Project tagManager
+   */
+  private final TagManager myTagManager;
   private final HumanResourceManager myResourceManager;
   private final TaskManagerConfigImpl myTaskManagerConfig;
   private Document myDocument;
@@ -67,6 +68,7 @@ public class GanttProjectImpl implements IGanttProject {
         new CustomColumnsManager());
     myTaskManagerConfig = new TaskManagerConfigImpl(myResourceManager, myCalendar, GanttLanguage.getInstance());
     myTaskManager = TaskManager.Access.newInstance(null, myTaskManagerConfig);
+    myTagManager = new TagManagerImpl();
     myUIConfiguration = new UIConfiguration(Color.BLUE, true);
     myTaskCustomColumnManager = new CustomColumnsManager();
     myCalendar.addListener(new GPCalendarListener() {
@@ -145,6 +147,11 @@ public class GanttProjectImpl implements IGanttProject {
   @Override
   public TaskManager getTaskManager() {
     return myTaskManager;
+  }
+
+  @Override
+  public TagManager getTagManager() {
+    return myTagManager;
   }
 
   @Override
