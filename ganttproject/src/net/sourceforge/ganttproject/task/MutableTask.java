@@ -35,6 +35,12 @@ public interface MutableTask {
 
   void setPriority(Task.Priority priority);
 
+  /**
+   * Set new tag
+   * @param tag
+   */
+  void setTag(Tag tag);
+
   void setStart(GanttCalendar start);
 
   void setEnd(GanttCalendar end);

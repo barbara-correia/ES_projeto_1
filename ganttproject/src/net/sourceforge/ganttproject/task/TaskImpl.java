@@ -84,6 +84,8 @@ public class TaskImpl implements Task {
 
   private Priority myPriority;
 
+  private Tag myTag;
+
   private GanttCalendar myStart;
 
   private GanttCalendar myEnd;
@@ -149,6 +151,7 @@ public class TaskImpl implements Task {
     myDependencySliceAsDependant = new TaskDependencySliceAsDependant(this, myManager.getDependencyCollection());
     myDependencySliceAsDependee = new TaskDependencySliceAsDependee(this, myManager.getDependencyCollection());
     myPriority = DEFAULT_PRIORITY;
+    myTag = null;
     myTaskHierarchyItem = myManager.getHierarchyManager().createItem(this);
     myNotes = "";
     bExpand = true;
@@ -175,6 +178,7 @@ public class TaskImpl implements Task {
     isMilestone = copy.isMilestone;
     isProjectTask = copy.isProjectTask;
     myPriority = copy.myPriority;
+    myTag = copy.myTag;
     myStart = copy.myStart;
     myEnd = copy.myEnd;
     myThird = copy.myThird;
@@ -346,6 +350,10 @@ public class TaskImpl implements Task {
     return myPriority;
   }
 
+  @Override
+  public Tag getTag(){
+    return myTag;
+  }
   @Override
   public GanttCalendar getStart() {
     if (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED) {
@@ -726,6 +734,16 @@ public class TaskImpl implements Task {
     }
 
     @Override
+    public void setTag(final Tag tag) {
+      myCommands.add(new Runnable() {
+        @Override
+        public void run() {
+          TaskImpl.this.setTag(tag);
+        }
+      });
+    }
+
+    @Override
     public void setStart(final GanttCalendar start) {
       assert start != null;
       GanttCalendar currentStart = getStart();
@@ -960,6 +978,9 @@ public class TaskImpl implements Task {
   public void setPriority(Priority priority) {
     myPriority = priority;
   }
+
+  @Override
+  public void setTag(Tag tag){myTag = tag;}
 
   @Override
   public void setStart(GanttCalendar start) {

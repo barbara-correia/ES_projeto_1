@@ -40,10 +40,7 @@ import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.roles.RoleManager;
 import net.sourceforge.ganttproject.shape.JPaintCombo;
-import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
-import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.TaskMutator;
+import net.sourceforge.ganttproject.task.*;
 import net.sourceforge.ganttproject.util.BrowserControl;
 import net.sourceforge.ganttproject.util.collect.Pair;
 import org.jdesktop.swingx.JXDatePicker;
@@ -55,6 +52,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Iterator;
 
 /**
  * Real panel for editing task properties
@@ -97,6 +95,11 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private JComboBox priorityComboBox;
 
+  /**
+   * Combo box with available project tags
+   */
+  private JComboBox<String> tagComboBox;
+
   private JCheckBox myEarliestBeginEnabled;
 
   private JCheckBox mileStoneCheckBox1;
@@ -134,6 +137,11 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private Task.Priority originalPriority;
 
+  /**
+   * tag that the task had before
+   */
+  private Tag originalTag;
+
   private ShapePaint originalShape;
 
   private final TaskScheduleDatesPanel myTaskScheduleDates;
@@ -150,6 +158,11 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private Task myUnpluggedClone;
   private final TaskManager myTaskManager;
+
+  /**
+   * Project tagManager
+   */
+  private final TagManager myTagManager;
   private final IGanttProject myProject;
   private final UIFacade myUIfacade;
 
@@ -163,6 +176,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     myHumanResourceManager = project.getHumanResourceManager();
     myRoleManager = project.getRoleManager();
     myTaskManager = project.getTaskManager();
+    myTagManager = project.getTagManager();
     myProject = project;
     myUIfacade = uifacade;
     init();
@@ -201,6 +215,15 @@ public class GanttTaskPropertiesBean extends JPanel {
     }
     priorityComboBox.setEditable(false);
     propertiesPanel.add(priorityComboBox);
+
+    propertiesPanel.add(new JLabel("Etiqueta"));
+    tagComboBox = new JComboBox();
+      Iterator<Tag> it = myTagManager.getTags();
+      while(it.hasNext()){
+        tagComboBox.addItem(it.next().getTagName());
+      }
+    tagComboBox.setEditable(false);
+    propertiesPanel.add(tagComboBox);
 
     propertiesPanel.add(new JLabel(language.getText("advancement")));
     SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
@@ -424,6 +447,8 @@ public class GanttTaskPropertiesBean extends JPanel {
       if (this.originalPriority != getPriority()) {
         mutator.setPriority(getPriority());
       }
+
+
       mutator.setColor(myTaskColorOption.getValue());
       if (this.originalShape == null && shapeComboBox.getSelectedIndex() != 0 || originalShape != null
           && !this.originalShape.equals(shapeComboBox.getSelectedPaint())) {
@@ -452,6 +477,8 @@ public class GanttTaskPropertiesBean extends JPanel {
 
     percentCompleteSlider.setValue(new Integer(originalCompletionPercentage));
     priorityComboBox.setSelectedIndex(originalPriority.ordinal());
+
+    tagComboBox.getSelectedItem();
 
     myTaskScheduleDates.setUnpluggedClone(myUnpluggedClone);
     DateValidator validator = UIUtil.DateValidator.Default.aroundProjectStart(myProject.getTaskManager().getProjectStart());
@@ -532,6 +559,10 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private Task.Priority getPriority() {
     return Task.Priority.getPriority(priorityComboBox.getSelectedIndex());
+  }
+
+  private Tag getTag(){
+    return myTagManager.getTag((String)tagComboBox.getSelectedItem());
   }
 
   private GanttCalendar getStart() {

@@ -116,6 +116,8 @@ public interface Task extends MutableTask {
 
   Priority getPriority();
 
+  Tag getTag();
+
   List<TaskActivity> getActivities();
 
   GanttCalendar getStart();
