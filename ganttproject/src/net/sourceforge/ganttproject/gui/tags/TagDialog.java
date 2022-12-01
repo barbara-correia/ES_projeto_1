@@ -36,7 +36,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+/**
+ * This class constructs the window to create a new tag.
+ */
 public class TagDialog {
+
+    private static final String ENTER_NAME = "Insira nome da etiqueta";
     private boolean change;
 
     private static final GanttLanguage language = GanttLanguage.getInstance();
@@ -67,10 +72,18 @@ public class TagDialog {
         myGroup.setTitled(false);
     }
 
+    /**
+     * This method indicates if there was any change.
+     * @return true if there was any change made or false if there wasn t any change made
+     */
     public boolean result() {
         return change;
     }
 
+    /**
+     * This method sets the window to visible.
+     * @param isVisible - indicates if the window is to be visible or not
+     */
     public void setVisible(boolean isVisible) {
         if (isVisible) {
             loadFields();
@@ -78,8 +91,10 @@ public class TagDialog {
             OkAction okAction = new OkAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    myGroup.commit();
-                    okButtonActionPerformed();
+                    if(!myNameField.getValue().equals(ENTER_NAME)) {
+                        myGroup.commit();
+                        okButtonActionPerformed();
+                    }
                 }
             };
             CancelAction cancelAction = new CancelAction() {
@@ -93,11 +108,18 @@ public class TagDialog {
         }
     }
 
+    /**
+     * This method loads the name field and the field to choose the color that will be associated with the tag.
+     */
     private void loadFields() {
-        myNameField.setValue("Enter tag name");
+        myNameField.setValue(ENTER_NAME);
         tagColorOption.setValue(Color.red);
     }
 
+    /**
+     * This method returns the dialog component built
+     * @return component
+     */
     private Component getComponent() {
         OptionsPageBuilder builder = new OptionsPageBuilder();
         OptionsPageBuilder.I18N i18n = new OptionsPageBuilder.I18N() {
@@ -133,11 +155,17 @@ public class TagDialog {
         return tabbedPane;
     }
 
+    /**
+     * This method triggers the applyChanges() function when the OK button is pressed.
+     */
     private void okButtonActionPerformed() {
         applyChanges();
         change = true;
     }
 
+    /**
+     * This method created a new Tag and adds it to the tag manager.
+     */
     private void applyChanges() {
         Tag nTag = new TagImpl(myNameField.getValue(), tagColorOption.getValue());
         myTagManager.addTag(nTag);

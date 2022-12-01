@@ -333,7 +333,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       bar.add(mTask);
     }
 
-    //Added for taskMarker
+    //Added for tags
     {
       TaskTreeUIFacade taskMarkerTree = getUIFacade().getTaskTree();
       JMenu mTaskMarker = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));

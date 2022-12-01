@@ -354,6 +354,12 @@ public class TaskImpl implements Task {
   public Tag getTag(){
     return myTag;
   }
+
+  @Override
+  public boolean isTagged() {
+    return myTag != null;
+  }
+
   @Override
   public GanttCalendar getStart() {
     if (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED) {

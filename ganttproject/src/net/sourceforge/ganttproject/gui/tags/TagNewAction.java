@@ -7,6 +7,9 @@ import net.sourceforge.ganttproject.task.TagManager;
 
 import java.awt.event.ActionEvent;
 
+/**
+ * This class constructs the tab that, when clicked, opens the window created by the class TagDialog.
+ */
 public class TagNewAction extends TagAction{
 
     private final UIFacade myUIFacade;

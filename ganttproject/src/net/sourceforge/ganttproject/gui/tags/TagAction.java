@@ -7,6 +7,9 @@ import net.sourceforge.ganttproject.action.GPAction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This abstract class holds the responsibility to implement any graphic action that has to do with tags.
+ */
 abstract class TagAction extends GPAction {
 
     private final List<ActionStateChangedListener> myListeners = new ArrayList<ActionStateChangedListener>();

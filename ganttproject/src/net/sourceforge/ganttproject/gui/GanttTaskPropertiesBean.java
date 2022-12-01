@@ -59,6 +59,8 @@ import java.util.Iterator;
  */
 public class GanttTaskPropertiesBean extends JPanel {
 
+  private static final String NO_TAG = "None";
+
   private ColorOption myTaskColorOption = new DefaultColorOption("");
   private final GPAction mySetDefaultColorAction = new GPAction("defaultColor") {
     @Override
@@ -219,6 +221,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     propertiesPanel.add(new JLabel("Etiqueta"));
     tagComboBox = new JComboBox();
       Iterator<Tag> it = myTagManager.getTags();
+        tagComboBox.addItem(NO_TAG);
       while(it.hasNext()){
         tagComboBox.addItem(it.next().getTagName());
       }
@@ -447,13 +450,29 @@ public class GanttTaskPropertiesBean extends JPanel {
       if (this.originalPriority != getPriority()) {
         mutator.setPriority(getPriority());
       }
+      boolean isTagged = false;
+      boolean wasTagged = false;
+      if (this.originalTag != getTag()) {
+        mutator.setTag(getTag());
+        if(getTag() != null) {
+          isTagged = true;
+        }
+        if(this.originalTag != null && !isTagged) {
+          wasTagged = true;
+        }
+      }
 
-
-      mutator.setColor(myTaskColorOption.getValue());
-      if (this.originalShape == null && shapeComboBox.getSelectedIndex() != 0 || originalShape != null
-          && !this.originalShape.equals(shapeComboBox.getSelectedPaint())) {
-        mutator.setShape(new ShapePaint((ShapePaint) shapeComboBox.getSelectedPaint(), Color.white,
-            myTaskColorOption.getValue()));
+      if(isTagged){
+        mutator.setColor(getTag().getTagColor());
+      } else if(wasTagged) {
+        mutator.setColor(myUIfacade.getGanttChart().getTaskDefaultColorOption().getValue());
+      }else{
+        mutator.setColor(myTaskColorOption.getValue());
+        if (this.originalShape == null && shapeComboBox.getSelectedIndex() != 0 || originalShape != null
+                && !this.originalShape.equals(shapeComboBox.getSelectedPaint())) {
+          mutator.setShape(new ShapePaint((ShapePaint) shapeComboBox.getSelectedPaint(), Color.white,
+                  myTaskColorOption.getValue()));
+        }
       }
 
       mutator.commit();
@@ -478,7 +497,11 @@ public class GanttTaskPropertiesBean extends JPanel {
     percentCompleteSlider.setValue(new Integer(originalCompletionPercentage));
     priorityComboBox.setSelectedIndex(originalPriority.ordinal());
 
-    tagComboBox.getSelectedItem();
+    if(originalTag == null) {
+      tagComboBox.setSelectedItem(NO_TAG);
+    } else {
+      tagComboBox.setSelectedItem(originalTag.getTagName());
+    }
 
     myTaskScheduleDates.setUnpluggedClone(myUnpluggedClone);
     DateValidator validator = UIUtil.DateValidator.Default.aroundProjectStart(myProject.getTaskManager().getProjectStart());
@@ -562,7 +585,11 @@ public class GanttTaskPropertiesBean extends JPanel {
   }
 
   private Tag getTag(){
-    return myTagManager.getTag((String)tagComboBox.getSelectedItem());
+    String tagName = (String)tagComboBox.getSelectedItem();
+    if(tagName.equals(NO_TAG)){
+      return null;
+    }
+    return myTagManager.getTag(tagName);
   }
 
   private GanttCalendar getStart() {
@@ -597,6 +624,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     originalNotes = task.getNotes();
     originalCompletionPercentage = task.getCompletionPercentage();
     originalPriority = task.getPriority();
+    originalTag = task.getTag();
     originalShape = task.getShape();
     originalEarliestBeginDate = task.getThird();
     originalEarliestBeginEnabled = task.getThirdDateConstraint();
