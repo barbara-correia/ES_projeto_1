@@ -83,7 +83,7 @@ class GanttChartTabContentPanel extends ChartTabContentPanel implements GPView {
   @Override
   protected Component createButtonPanel() {
     ToolbarBuilder builder = new ToolbarBuilder()
-        .withHeight(24)
+        .withHeight(24)  //barra de comandos do painel lateral
         .withSquareButtons()
         .withDpiOption(myWorkbenchFacade.getDpiOption())
         .withLafOption(myWorkbenchFacade.getLafOption(), new Function<String, Float>() {

@@ -204,6 +204,8 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
+  private Boolean isZeroFavorites = true;
+
   TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
@@ -1252,6 +1254,10 @@ public class TaskManagerImpl implements TaskManager {
   @Override
   public Boolean isZeroMilestones() {
     return isZeroMilestones;
+  }
+
+  public Boolean isZeroFavorites(){
+    return isZeroFavorites;
   }
 
   @Override

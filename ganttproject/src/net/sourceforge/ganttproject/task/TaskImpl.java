@@ -80,6 +80,8 @@ public class TaskImpl implements Task {
 
   private boolean isMilestone;
 
+  private boolean isFavorite;
+
   boolean isProjectTask;
 
   private Priority myPriority;
@@ -173,6 +175,7 @@ public class TaskImpl implements Task {
     myName = copy.myName;
     myWebLink = copy.myWebLink;
     isMilestone = copy.isMilestone;
+    isFavorite = copy.isFavorite;
     isProjectTask = copy.isProjectTask;
     myPriority = copy.myPriority;
     myStart = copy.myStart;
@@ -333,6 +336,9 @@ public class TaskImpl implements Task {
     return Collections.emptyList();
   }
 
+  public boolean isFavorite() { return isFavorite && Boolean.TRUE == myManager.isZeroFavorites(); }
+
+  public boolean isLegacyFavorite() { return isFavorite;}
   @Override
   public boolean isMilestone() {
     return isMilestone && Boolean.TRUE == myManager.isZeroMilestones();
@@ -715,6 +721,15 @@ public class TaskImpl implements Task {
       });
     }
 
+    public void setFavorite(final boolean favorite) {
+      myCommands.add(new Runnable() {
+        @Override
+        public void run() {
+          TaskImpl.this.setFavorite(favorite);
+        }
+      });
+    }
+
     @Override
     public void setPriority(final Priority priority) {
       myCommands.add(new Runnable() {
@@ -952,6 +967,13 @@ public class TaskImpl implements Task {
   public void setMilestone(boolean milestone) {
     isMilestone = milestone;
     if (milestone) {
+      setEnd(null);
+    }
+  }
+
+  public void setFavorite(boolean favorite) {
+    isFavorite = favorite;
+    if(favorite){
       setEnd(null);
     }
   }

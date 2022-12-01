@@ -94,14 +94,15 @@ public class GanttTaskPropertiesBean extends JPanel {
   private JButton bWebLink;
 
   private JSpinner percentCompleteSlider;
-  //ADDED BY Gonçalo Rodrigues
-  private JCheckBox favoriteTask;
 
   private JComboBox priorityComboBox;
 
   private JCheckBox myEarliestBeginEnabled;
 
   private JCheckBox mileStoneCheckBox1;
+
+  //ADDED BY Gonçalo Rodrigues
+  private JCheckBox favoriteTaskCheckBox;
 
   private JCheckBox projectTaskCheckBox1;
 
@@ -120,6 +121,8 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private boolean originalIsMilestone;
 
+  private boolean originalIsFavorite;
+
   private GanttCalendar originalStartDate;
 
   private GanttCalendar originalEndDate;
@@ -129,6 +132,7 @@ public class GanttTaskPropertiesBean extends JPanel {
   private int originalEarliestBeginEnabled;
 
   private boolean originalIsProjectTask;
+
 
   private String originalNotes;
 
@@ -193,8 +197,8 @@ public class GanttTaskPropertiesBean extends JPanel {
     //Added
 
     propertiesPanel.add(new JLabel("Favoritos"));
-    favoriteTask = new JCheckBox();
-    propertiesPanel.add(favoriteTask);
+    favoriteTaskCheckBox = new JCheckBox();
+    propertiesPanel.add(favoriteTaskCheckBox);
 
     //
     addEmptyRow(propertiesPanel);
@@ -410,6 +414,13 @@ public class GanttTaskPropertiesBean extends JPanel {
           mutator.setProjectTask(isProjectTask());
         }
       }
+      //Added By Guilherme Santana
+      if(favoriteTaskCheckBox != null) {
+        if(originalIsFavorite != isFavorite()){
+          mutator.setFavorite(isFavorite());
+        }
+      }
+
       if (!originalStartDate.equals(getStart())) {
         mutator.setStart(getStart());
       }
@@ -482,6 +493,12 @@ public class GanttTaskPropertiesBean extends JPanel {
     } else if (projectTaskCheckBox1 != null) {
       projectTaskCheckBox1.setSelected(originalIsProjectTask);
     }
+
+
+    if (favoriteTaskCheckBox != null){
+      favoriteTaskCheckBox.setSelected(originalIsFavorite);
+    }
+
     myTaskScheduleDates.setupFields(isMilestone(), isSupertask());
 
     tfWebLink.setText(originalWebLink);
@@ -510,6 +527,14 @@ public class GanttTaskPropertiesBean extends JPanel {
       return false;
     }
     return mileStoneCheckBox1.isSelected();
+  }
+
+  //Added by Guilherme Santana
+  private boolean isFavorite() {
+    if (favoriteTaskCheckBox == null) {
+      return false;
+    }
+    return favoriteTaskCheckBox.isSelected();
   }
 
 
@@ -571,6 +596,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     originalName = task.getName();
     originalWebLink = task.getWebLink();
     originalIsMilestone = task.isLegacyMilestone();
+    originalIsFavorite = task.isLegacyFavorite();
     originalStartDate = task.getStart();
     originalEndDate = task.getEnd();
     originalNotes = task.getNotes();
