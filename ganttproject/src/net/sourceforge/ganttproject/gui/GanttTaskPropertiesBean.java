@@ -451,7 +451,6 @@ public class GanttTaskPropertiesBean extends JPanel {
         mutator.setPriority(getPriority());
       }
       boolean wasTagged = false;
-      boolean wasDeleted = false;
       if (this.originalTag != getTag()) {
         mutator.setTag(getTag());
         mutator.commit();
@@ -460,8 +459,6 @@ public class GanttTaskPropertiesBean extends JPanel {
           if(!selectedTasks[i].isTagged()) {
             wasTagged = true;
           }
-          if(myTagManager.getTag(this.originalTag.getTagName()) == null )
-            wasDeleted = true;
         }
       }
 
@@ -479,11 +476,6 @@ public class GanttTaskPropertiesBean extends JPanel {
                   myTaskColorOption.getValue()));
         }
       }
-
-      if(wasDeleted){
-        mutator.setColor(this.originalTag.getTagColor());
-      }
-
       mutator.commit();
       myDependenciesPanel.commit();
       myAllocationsPanel.commit();
