@@ -32,6 +32,8 @@ public class TagImpl implements Tag {
     }
 
     public boolean addTagToTask(Task task) {
+        if(taggedTasks.contains(task))
+            return false;
         return taggedTasks.add(task);
     }
 

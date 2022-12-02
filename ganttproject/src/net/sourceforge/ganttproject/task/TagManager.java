@@ -22,4 +22,13 @@ public interface TagManager {
 
     //Adds a new tag to the system
     public boolean addTag(Tag tag);
+
+    //Removes a tag from the system
+    public boolean removeTag(String tagName);
+
+    //Adds a task to the tag given the tag name and the new task name
+    public boolean addTaskToTag(String tagName, Task task);
+
+    //Removes a task from te tag given the task name and the tag name
+    public boolean removeTaskFromTag(String tagName, Task task);
 }

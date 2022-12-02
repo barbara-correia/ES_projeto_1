@@ -471,21 +471,26 @@ public class GanttTaskPropertiesBean extends JPanel {
       if (this.originalPriority != getPriority()) {
         mutator.setPriority(getPriority());
       }
-      boolean isTagged = false;
       boolean wasTagged = false;
+      boolean wasDeleted = false;
       if (this.originalTag != getTag()) {
         mutator.setTag(getTag());
-        if(getTag() != null) {
-          isTagged = true;
-        }
-        if(this.originalTag != null && !isTagged) {
-          wasTagged = true;
+        mutator.commit();
+        if(this.originalTag != null) {
+          myTagManager.removeTaskFromTag(originalTag.getTagName(),selectedTasks[i]);
+          if(!selectedTasks[i].isTagged()) {
+            wasTagged = true;
+          }
+          if(myTagManager.getTag(this.originalTag.getTagName()) == null )
+            wasDeleted = true;
         }
       }
 
-      if(isTagged){
+      if(selectedTasks[i].isTagged()){
         mutator.setColor(getTag().getTagColor());
-      } else if(wasTagged) {
+        myTagManager.addTaskToTag(getTag().getTagName(),selectedTasks[i]);
+
+     }else if(wasTagged) {
         mutator.setColor(myUIfacade.getGanttChart().getTaskDefaultColorOption().getValue());
       }else{
         mutator.setColor(myTaskColorOption.getValue());
@@ -494,6 +499,10 @@ public class GanttTaskPropertiesBean extends JPanel {
           mutator.setShape(new ShapePaint((ShapePaint) shapeComboBox.getSelectedPaint(), Color.white,
                   myTaskColorOption.getValue()));
         }
+      }
+
+      if(wasDeleted){
+        mutator.setColor(this.originalTag.getTagColor());
       }
 
       mutator.commit();

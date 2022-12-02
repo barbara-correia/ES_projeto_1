@@ -60,7 +60,9 @@ import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.UIUtil;
 import net.sourceforge.ganttproject.gui.scrolling.ScrollingManager;
+import net.sourceforge.ganttproject.gui.tags.TagDeleteAction;
 import net.sourceforge.ganttproject.gui.tags.TagNewAction;
+import net.sourceforge.ganttproject.gui.tags.TaskByTagAction;
 import net.sourceforge.ganttproject.importer.Importer;
 import net.sourceforge.ganttproject.io.GPSaver;
 import net.sourceforge.ganttproject.io.GanttXMLOpen;
@@ -346,9 +348,11 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     //Added for tags
     {
       TaskTreeUIFacade taskMarkerTree = getUIFacade().getTaskTree();
-      JMenu mTaskMarker = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));
-      mTaskMarker.add(new TagNewAction(getTagManager(),getUIFacade()));
-      bar.add(mTaskMarker);
+      JMenu mTag = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));
+      mTag.add(new TagNewAction(getTagManager(),getUIFacade()));
+      mTag.add(new TagDeleteAction(getTagManager(),getUIFacade()));
+      mTag.add(new TaskByTagAction(getTagManager(), getUIFacade()));
+      bar.add(mTag);
     }
 
     {

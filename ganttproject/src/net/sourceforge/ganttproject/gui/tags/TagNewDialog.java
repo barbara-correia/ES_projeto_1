@@ -20,7 +20,6 @@ package net.sourceforge.ganttproject.gui.tags;
 
 import biz.ganttproject.core.option.*;
 import net.sourceforge.ganttproject.action.CancelAction;
-import net.sourceforge.ganttproject.action.GPAction;
 import net.sourceforge.ganttproject.action.OkAction;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.options.OptionsPageBuilder;
@@ -28,7 +27,6 @@ import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.task.Tag;
 import net.sourceforge.ganttproject.task.TagImpl;
 import net.sourceforge.ganttproject.task.TagManager;
-import org.jdesktop.swingx.JXHyperlink;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,20 +37,19 @@ import java.awt.event.FocusEvent;
 /**
  * This class constructs the window to create a new tag.
  */
-public class TagDialog {
+public class TagNewDialog {
 
+    private static final String PANEL_TITLE = "Adicionar etiqueta";
     private static final String ENTER_NAME = "Insira nome da etiqueta";
+
+    private static final String TAG_COLOR = "Cor da etiqueta";
     private boolean change;
-
-    private static final GanttLanguage language = GanttLanguage.getInstance();
-
-    private JTabbedPane tabbedPane;
 
     private final StringOption myNameField = new DefaultStringOption("name");
 
     private final GPOptionGroup myGroup;
 
-    private ColorOption tagColorOption = new DefaultColorOption("Cor da etiqueta");
+    private ColorOption tagColorOption = new DefaultColorOption(TAG_COLOR);
 
     private final UIFacade myUIFacade;
 
@@ -65,7 +62,7 @@ public class TagDialog {
         }
     };*/
 
-    public TagDialog(UIFacade uiFacade, TagManager tagManager) {
+    public TagNewDialog(UIFacade uiFacade, TagManager tagManager) {
         myUIFacade = uiFacade;
         myTagManager = tagManager;
         myGroup = new GPOptionGroup("", new GPOption[]{myNameField});
@@ -104,7 +101,7 @@ public class TagDialog {
                     change = false;
                 }
             };
-            myUIFacade.createDialog(contentPane, new Action[]{okAction, cancelAction}, "Tag").show();
+            myUIFacade.createDialog(contentPane, new Action[]{okAction, cancelAction}, PANEL_TITLE).show();
         }
     }
 
@@ -133,13 +130,10 @@ public class TagDialog {
         mainPage.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         builder.setUiFacade(myUIFacade);
         JPanel colorBox = new JPanel(new BorderLayout(5, 0));
-        colorBox.add(new JLabel("Cor da etiqueta: ", JLabel.LEFT));
+        colorBox.add(new JLabel(TAG_COLOR, JLabel.LEFT));
         colorBox.add(builder.createColorComponent(tagColorOption).getJComponent(), BorderLayout.EAST);
         mainPage.add(colorBox);
-        tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Criar", new ImageIcon(getClass().getResource("/icons/properties_16.gif")),
-                mainPage);
-        tabbedPane.addFocusListener(new FocusAdapter() {
+        mainPage.addFocusListener(new FocusAdapter() {
             boolean isFirstTime = true;
 
             @Override
@@ -152,7 +146,7 @@ public class TagDialog {
             }
 
         });
-        return tabbedPane;
+        return mainPage;
     }
 
     /**

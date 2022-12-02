@@ -38,4 +38,18 @@ public class TagManagerImpl implements TagManager{
         Tag t =  allTags.put(tag.getTagName(),tag);
         return t != null;
     }
+
+    @Override
+    public boolean removeTag(String tagName) {
+       Tag t = allTags.remove(tagName);
+       return t != null;
+    }
+
+    public boolean addTaskToTag(String tagName, Task task) {
+        return allTags.get(tagName).addTagToTask(task);
+    }
+
+    public boolean removeTaskFromTag(String tagName,Task task) {
+        return allTags.get(tagName).removeTaskFromTag(task);
+    }
 }
