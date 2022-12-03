@@ -1,11 +1,11 @@
 Use Case: Create Filter/Label
 ID: 1
 Description: Creates a new label that could be associeted to a task
-Main actor: User
+Main actor: Project Manager
 Secondary actor: None
 Pre-conditions: None
 "Main flow:
-1. The case starts when the user select the option - ainda a defenir como - to craate a filter/label
+1. The case starts when the user select the option "Nova etiqueta" to create a filter/label
 2. While the Label/filter name is invalid
         2.1 The system asks the user the name of the new label/Filter to associate to the tasks
 3. The System creates the new label/filter"
@@ -15,8 +15,8 @@ Alternative flow: InvalidNameFilter
 
 Alternative flow: Create Filter/Label:InvalidNameFilter
 ID: 1.1
-Description: The system informs the User that he or she has entered na invalid name to the label/filter
-Main actor: User
+Description: The system informs the User that he or she has entered an invalid name to the label/filter
+Main actor: Project Manager
 Secondary actor: None
 Pre-conditions: The User has entered na invalid name Label
 "Alternative flow:
@@ -28,14 +28,14 @@ Post-conditions: None
 
 Use Case: Remove Filter/Label
 ID: 1
-Description: Removes a existen label that could be associeted to a task
-Main actor: User
+Description: Removes an existen label that could be associeted to a task
+Main actor: Project Manager
 Secondary actor: None
 Pre-conditions: The label to be removed need to exists in the system
 "Main flow:
-The case starts when the user select the option - ainda a defenir como - to remove a filter/label
+The case starts when the user select the option "Apagar etiqueta" to remove a filter/label
 The user selects the name of the label/Filter to remove
-For eacht task, the system checks if has the label to be removed
+For each task, the system checks if has the label to be removed
 If the label to remove is associated to some tasks
        the system removes that filter/label to that taks
 Else
@@ -46,15 +46,14 @@ Alternative flow: None
 
 
 
-Use Case: Assoceate Filter/Label to a task
+Use Case: Lists tasks with Label
 ID: 1
-Description: Associates a existen label to an new or existent task
-Main actor: User
+Description: Lists all tasks by Labels
+Main actor: Project Manager
 Secondary actor: None
-Pre-conditions: The label and the associated task need to exist in the system
+Pre-conditions: None
 "Main flow:
-The case starts when the user select the option - ainda a defenir como - to associate a label/filter to a task.
-The user selects a label and a task to associate to 
-The especifed task has a new label associeted"
+The case starts when the project manager selects the option "Tarefas por etiqueta"
+The system will iterate all the tasks associated with any label existen 
 Post-conditions: the especifed task has a new filter/label
 Alternative flow: None

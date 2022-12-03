@@ -1,0 +1,7 @@
+Guilherme Santana
+
+Relatively to the use case diagram, it's all good
+
+Relatively to the abstract uses cases the abstract use case "Calculate critical path" is missing. The main flow of the use cases is missing too.
+
+Besides the things mentioned above, everything seems alright
