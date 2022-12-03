@@ -1,12 +1,14 @@
 package net.sourceforge.ganttproject.gui.tags;
 
 import biz.ganttproject.core.option.*;
+import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.action.CancelAction;
 import net.sourceforge.ganttproject.action.OkAction;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.options.OptionsPageBuilder;
 import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.task.*;
+import net.sourceforge.ganttproject.task.dependency.TaskDependencyException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +33,8 @@ public class TagDeleteDialog {
 
     private final TagManager myTagManager;
 
+    private final TaskManager myTaskManager;
+
    /* private final GPAction mySetDefaultColorAction = new GPAction("defaultColor") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -38,9 +42,10 @@ public class TagDeleteDialog {
         }
     };*/
 
-    public TagDeleteDialog(UIFacade uiFacade, TagManager tagManager) {
+    public TagDeleteDialog(UIFacade uiFacade, TagManager tagManager, TaskManager taskManager) {
         myUIFacade = uiFacade;
         myTagManager = tagManager;
+        myTaskManager = taskManager;
         myGroup = new GPOptionGroup("", new GPOption[]{myNameField});
         myGroup.setTitled(false);
     }
@@ -65,9 +70,23 @@ public class TagDeleteDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(!myNameField.getValue().equals(ENTER_NAME)) {
-                        /*if(myTagManager.getTag(myNameField.getValue()) != null){
-                            resetTasksBeforeDeletion();
-                        }*/
+                        if(myTagManager.getTag(myNameField.getValue()) != null){
+                            final GanttLanguage language = GanttLanguage.getInstance();
+                            myUIFacade.getUndoManager().undoableEdit(language.getText("properties.changed"), new Runnable() {
+                                @Override
+                                public void run() {
+                                    resetTasksBeforeDeletion();
+                                    try {
+                                       myTaskManager.getAlgorithmCollection().getRecalculateTaskScheduleAlgorithm().run();
+                                    } catch (TaskDependencyException e) {
+                                        if (!GPLogger.log(e)) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    myUIFacade.refresh();
+                                }
+                            });
+                        }
                         myGroup.commit();
                         okButtonActionPerformed();
                     }
@@ -84,7 +103,7 @@ public class TagDeleteDialog {
         }
     }
 
-   /* private void resetTasksBeforeDeletion(){
+    private void resetTasksBeforeDeletion(){
         Tag toDel = myTagManager.getTag(myNameField.getValue());
         Iterator<Task> it = toDel.getTaggedTasks();
         while(it.hasNext()){
@@ -96,7 +115,7 @@ public class TagDeleteDialog {
             mutator.setTag(null);
             mutator.commit();
         }
-    }*/
+    }
 
     /**
      * This method loads the name field and the field to choose the color that will be associated with the tag.

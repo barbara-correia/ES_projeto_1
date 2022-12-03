@@ -69,19 +69,21 @@ public class TaskByTagDialog {
         JPanel currentPanel = new JPanel();
         while(itTags.hasNext()){
             Tag currentTag = itTags.next();
-            currentPanel = new JPanel();
-            JLabel title = new JLabel(currentTag.getTagName());
-            title.setForeground(currentTag.getTagColor());
-            currentPanel.setLayout( new GridLayout(0,1));
-            currentPanel.add(title);
-            Iterator<Task> itTasks = currentTag.getTaggedTasks();
-            while(itTasks.hasNext()){
-                Task currentTask = itTasks.next();
-                JLabel taskName = new JLabel(currentTask.getName());
-                currentPanel.add(taskName);
+            if(currentTag.getNumberOfTaggedTasks() > 0) { //only tags with associated tasks show
+                currentPanel = new JPanel();
+                JLabel title = new JLabel(currentTag.getTagName());
+                title.setForeground(currentTag.getTagColor());
+                currentPanel.setLayout(new GridLayout(0, 1));
+                currentPanel.add(title);
+                Iterator<Task> itTasks = currentTag.getTaggedTasks();
+                while (itTasks.hasNext()) {
+                    Task currentTask = itTasks.next();
+                    JLabel taskName = new JLabel(currentTask.getName());
+                    currentPanel.add(taskName);
+                }
+                tabbedPane.addTab(currentTag.getTagName(), null,
+                        currentPanel);
             }
-            tabbedPane.addTab(currentTag.getTagName(), null,
-                    currentPanel);
         }
         final JPanel finalCurrentPanel = currentPanel;
         tabbedPane.addFocusListener(new FocusAdapter() {

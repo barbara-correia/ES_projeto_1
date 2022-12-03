@@ -350,7 +350,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       TaskTreeUIFacade taskMarkerTree = getUIFacade().getTaskTree();
       JMenu mTag = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));
       mTag.add(new TagNewAction(getTagManager(),getUIFacade()));
-      mTag.add(new TagDeleteAction(getTagManager(),getUIFacade()));
+      mTag.add(new TagDeleteAction(getTagManager(),getUIFacade(), getTaskManager()));
       mTag.add(new TaskByTagAction(getTagManager(), getUIFacade()));
       bar.add(mTag);
     }

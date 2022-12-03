@@ -1,7 +1,8 @@
 package net.sourceforge.ganttproject.task;
+
+
 import java.awt.*;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -42,10 +43,19 @@ public class TagImpl implements Tag {
     }
 
     public Iterator<Task> getTaggedTasks() {
+        Collections.sort(taggedTasks,new TaskPrioritySorting());
         return taggedTasks.iterator();
     }
 
     public int getNumberOfTaggedTasks() {
         return taggedTasks.size();
+    }
+
+    static class TaskPrioritySorting implements  Comparator<Task>{
+
+        @Override
+        public int compare(Task t1, Task t2) {
+            return t2.getPriority().ordinal() - t1.getPriority().ordinal();
+        }
     }
 }
