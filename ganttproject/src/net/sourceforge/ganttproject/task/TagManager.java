@@ -2,6 +2,7 @@ package net.sourceforge.ganttproject.task;
 import net.sourceforge.ganttproject.task.Tag;
 import net.sourceforge.ganttproject.task.Task;
 
+import java.awt.*;
 import java.util.Iterator;
 
 public interface TagManager {
@@ -26,9 +27,15 @@ public interface TagManager {
     //Removes a tag from the system
     public boolean removeTag(String tagName);
 
+    //Adds a task to the tag given the tag id and the new task name
+    public boolean addTaskToTag(int id, Task task);
+
     //Adds a task to the tag given the tag name and the new task name
-    public boolean addTaskToTag(String tagName, Task task);
+    public boolean addTaskToTag(String name, Task task);
 
     //Removes a task from te tag given the task name and the tag name
-    public boolean removeTaskFromTag(String tagName, Task task);
+    public boolean removeTaskFromTag(int id, Task task);
+
+    //Edits the name and color of the tag with the given name
+    public void editTag(String name, String newName, Color newColor);
 }

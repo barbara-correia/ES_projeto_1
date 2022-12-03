@@ -60,6 +60,7 @@ import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.UIUtil;
 import net.sourceforge.ganttproject.gui.scrolling.ScrollingManager;
 import net.sourceforge.ganttproject.gui.tags.TagDeleteAction;
+import net.sourceforge.ganttproject.gui.tags.TagEditAction;
 import net.sourceforge.ganttproject.gui.tags.TagNewAction;
 import net.sourceforge.ganttproject.gui.tags.TaskByTagAction;
 import net.sourceforge.ganttproject.importer.Importer;
@@ -341,6 +342,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       JMenu mTag = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Etiquetas"));
       mTag.add(new TagNewAction(getTagManager(),getUIFacade()));
       mTag.add(new TagDeleteAction(getTagManager(),getUIFacade(), getTaskManager()));
+        mTag.add(new TagEditAction(getTagManager(), getUIFacade(), getTaskManager()));
       mTag.add(new TaskByTagAction(getTagManager(), getUIFacade()));
       bar.add(mTag);
     }

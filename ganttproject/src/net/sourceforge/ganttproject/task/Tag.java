@@ -11,9 +11,18 @@ public interface Tag {
      */
     public String getTagName();
 
-    /**
-     * Return the color of the tag
-     * @return
+    /*
+     * Changes the color of the tag
+     */
+    public void setColor(Color newColor);
+
+    /*
+     * Changes the name of the tag
+     */
+    public void setName(String newName);
+
+    /*
+
      */
     public Color getTagColor();
 
@@ -36,4 +45,13 @@ public interface Tag {
     Gets number of tasks with this tag
      */
     public int getNumberOfTaggedTasks();
+
+    /*
+    * Returns the id of the tag*/
+    public int getId();
+
+    /*
+    Sets the id for the tag
+     */
+    public void setId(int id);
 }

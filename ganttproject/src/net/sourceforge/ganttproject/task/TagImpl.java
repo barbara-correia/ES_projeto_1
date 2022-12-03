@@ -10,6 +10,8 @@ import javax.swing.*;
 public class TagImpl implements Tag {
 
     private String name;
+
+    private int id;
     private Color color;
     private List<Task> taggedTasks;
 
@@ -17,6 +19,7 @@ public class TagImpl implements Tag {
         this.name = name;
         this.taggedTasks = new LinkedList<Task>();
         this.color = color;
+        this.id = -1;
     }
 
     public String getTagName() {
@@ -30,6 +33,10 @@ public class TagImpl implements Tag {
 
     public void setName(String newName) {
         this.name = newName;
+    }
+
+    public void setColor(Color newColor) {
+        this.color = newColor;
     }
 
     public boolean addTagToTask(Task task) {
@@ -51,6 +58,16 @@ public class TagImpl implements Tag {
         return taggedTasks.size();
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        if(this.id == -1) this.id = id;
+    }
+
     static class TaskPrioritySorting implements  Comparator<Task>{
 
         @Override
@@ -58,4 +75,6 @@ public class TagImpl implements Tag {
             return t2.getPriority().ordinal() - t1.getPriority().ordinal();
         }
     }
+
+
 }

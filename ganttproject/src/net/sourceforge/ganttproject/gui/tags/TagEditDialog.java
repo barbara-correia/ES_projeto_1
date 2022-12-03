@@ -1,59 +1,44 @@
-/*
-GanttProject is an opensource project management tool.
-Copyright (C) 2003-2011 GanttProject Team
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 3
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
 package net.sourceforge.ganttproject.gui.tags;
 
 import biz.ganttproject.core.option.*;
+import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.action.CancelAction;
 import net.sourceforge.ganttproject.action.OkAction;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.options.OptionsPageBuilder;
 import net.sourceforge.ganttproject.language.GanttLanguage;
-import net.sourceforge.ganttproject.task.Tag;
-import net.sourceforge.ganttproject.task.TagImpl;
-import net.sourceforge.ganttproject.task.TagManager;
+import net.sourceforge.ganttproject.task.*;
+import net.sourceforge.ganttproject.task.dependency.TaskDependencyException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.Iterator;
 
-/**
- * This class constructs the window to create a new tag.
- */
-public class TagNewDialog {
+public class TagEditDialog {
 
-    private static final String PANEL_TITLE = "Adicionar etiqueta";
+    private static final String PANEL_TITLE = "Editar etiqueta";
     private static final String ENTER_NAME = "Insira nome da etiqueta";
+    private static  final String ENTER_NEW_NAME = "Insira o novo nome";
 
-    private static final String TAG_COLOR = "Cor da etiqueta";
+    private static final String TAG_COLOR = "Nova cor da etiqueta";
+
     private boolean change;
 
-    private final StringOption myNameField = new DefaultStringOption("name");
+    private final StringOption myNameField = new DefaultStringOption("Nome Antigo");
+    private final StringOption myNewNameField = new DefaultStringOption("Nome Novo");
+    private ColorOption tagColorOption = new DefaultColorOption(TAG_COLOR);
 
     private final GPOptionGroup myGroup;
 
-    private ColorOption tagColorOption = new DefaultColorOption(TAG_COLOR);
 
     private final UIFacade myUIFacade;
 
     private final TagManager myTagManager;
+
+    private final TaskManager myTaskManager;
 
    /* private final GPAction mySetDefaultColorAction = new GPAction("defaultColor") {
         @Override
@@ -62,10 +47,11 @@ public class TagNewDialog {
         }
     };*/
 
-    public TagNewDialog(UIFacade uiFacade, TagManager tagManager) {
+    public TagEditDialog(UIFacade uiFacade, TagManager tagManager, TaskManager taskManager) {
         myUIFacade = uiFacade;
         myTagManager = tagManager;
-        myGroup = new GPOptionGroup("", new GPOption[]{myNameField});
+        myTaskManager = taskManager;
+        myGroup = new GPOptionGroup("", new GPOption[]{myNameField, myNewNameField});
         myGroup.setTitled(false);
     }
 
@@ -89,9 +75,24 @@ public class TagNewDialog {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(!myNameField.getValue().equals(ENTER_NAME)) {
-                        myGroup.commit();
-                        okButtonActionPerformed();
+                        final GanttLanguage language = GanttLanguage.getInstance();
+                        myUIFacade.getUndoManager().undoableEdit(language.getText("properties.changed"), new Runnable() {
+                            @Override
+                            public void run() {
+                                changeColorAfterEdit();
+                                try {
+                                    myTaskManager.getAlgorithmCollection().getRecalculateTaskScheduleAlgorithm().run();
+                                } catch (TaskDependencyException e) {
+                                    if (!GPLogger.log(e)) {
+                                            e.printStackTrace();
+                                    }
+                                }
+                                myUIFacade.refresh();
+                            }
+                        });
                     }
+                    myGroup.commit();
+                    okButtonActionPerformed();
                 }
             };
             CancelAction cancelAction = new CancelAction() {
@@ -105,11 +106,25 @@ public class TagNewDialog {
         }
     }
 
+    private void changeColorAfterEdit(){
+        Tag edited = myTagManager.getTag(myNameField.getValue());
+        Iterator<Task> it = edited.getTaggedTasks();
+        while(it.hasNext()){
+            Task current = it.next();
+            Tag t = current.getTag();
+            TaskMutator mutator = current.createMutator();
+            mutator.setTag(t);
+            mutator.setColor(tagColorOption.getValue());
+            mutator.commit();
+        }
+    }
+
     /**
      * This method loads the name field and the field to choose the color that will be associated with the tag.
      */
     private void loadFields() {
         myNameField.setValue(ENTER_NAME);
+        myNewNameField.setValue(ENTER_NEW_NAME);
         tagColorOption.setValue(Color.red);
     }
 
@@ -128,11 +143,13 @@ public class TagNewDialog {
         builder.setI18N(i18n);
         final JComponent mainPage = builder.buildPlanePage(new GPOptionGroup[]{myGroup});
         mainPage.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
         builder.setUiFacade(myUIFacade);
         JPanel colorBox = new JPanel(new BorderLayout(5, 0));
         colorBox.add(new JLabel(TAG_COLOR, JLabel.LEFT));
         colorBox.add(builder.createColorComponent(tagColorOption).getJComponent(), BorderLayout.EAST);
         mainPage.add(colorBox);
+
         mainPage.addFocusListener(new FocusAdapter() {
             boolean isFirstTime = true;
 
@@ -161,9 +178,10 @@ public class TagNewDialog {
      * This method created a new Tag and adds it to the tag manager.
      */
     private void applyChanges() {
-        if(myTagManager.getTag(myNameField.getValue()) == null) {
-            Tag nTag = new TagImpl(myNameField.getValue(), tagColorOption.getValue());
-            myTagManager.addTag(nTag);
+        if(myNewNameField.getValue().equals(ENTER_NEW_NAME)){
+            myTagManager.editTag(myNameField.getValue(), myNameField.getValue(), tagColorOption.getValue());
+        }else {
+            myTagManager.editTag(myNameField.getValue(), myNewNameField.getValue(), tagColorOption.getValue());
         }
     }
 }

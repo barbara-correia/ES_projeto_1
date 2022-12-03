@@ -1,13 +1,22 @@
 package net.sourceforge.ganttproject.task;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class TagManagerImpl implements TagManager{
 
     private Map<String,Tag> allTags;
 
+    private Map<Integer,Tag> tagsById;
+
+    private int count;
+
     public TagManagerImpl() {
         allTags = new HashMap<String,Tag>();
+        tagsById = new HashMap<Integer,Tag>();
+        this.count = 0;
     }
+
 
     public Iterator<Tag> getTags() {
         List<Tag> res = new LinkedList<Tag>();
@@ -36,20 +45,41 @@ public class TagManagerImpl implements TagManager{
 
     public boolean addTag(Tag tag) {
         Tag t =  allTags.put(tag.getTagName(),tag);
+        tagsById.put(count, tag);
+        tag.setId(count);
+        count++;
         return t != null;
     }
 
     @Override
     public boolean removeTag(String tagName) {
        Tag t = allTags.remove(tagName);
-       return t != null;
+       try {
+           tagsById.remove(t.getId());
+           return true;
+       }catch(Exception e){
+           return false;
+       }
     }
 
-    public boolean addTaskToTag(String tagName, Task task) {
-        return allTags.get(tagName).addTagToTask(task);
+    public boolean addTaskToTag(int id, Task task) {
+        return tagsById.get(id).addTagToTask(task);
+    }
+    public boolean addTaskToTag(String name, Task task){
+        return allTags.get(name).addTagToTask(task);
     }
 
-    public boolean removeTaskFromTag(String tagName,Task task) {
-        return allTags.get(tagName).removeTaskFromTag(task);
+    public boolean removeTaskFromTag(int id,Task task) {
+        return tagsById.get(id).removeTaskFromTag(task);
+    }
+
+    @Override
+    public void editTag(String name, String newName, Color newColor) {
+        Tag tag = allTags.get(name);
+        tagsById.get(tag.getId()).setName(newName);
+        tagsById.get(tag.getId()).setColor(newColor);
+
+        allTags.remove(name);
+        allTags.put(newName, tag);
     }
 }
