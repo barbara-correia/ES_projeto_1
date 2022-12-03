@@ -29,6 +29,7 @@ import net.sourceforge.ganttproject.document.Document.DocumentException;
 import net.sourceforge.ganttproject.gui.UIConfiguration;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.roles.RoleManager;
+import net.sourceforge.ganttproject.task.FavoritesManager;
 import net.sourceforge.ganttproject.task.TagManager;
 import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
 import net.sourceforge.ganttproject.task.TaskManager;
@@ -70,6 +71,8 @@ public interface IGanttProject {
    * @return a TagManager object
    */
   TagManager getTagManager();
+
+  FavoritesManager getFavoriteManager();
 
   TaskContainmentHierarchyFacade getTaskContainment();
 

@@ -62,15 +62,15 @@ public class FavoritesPanel {
 
         JPanel jp = new JPanel(new BorderLayout(10, 10));
         JLabel label = new JLabel("Favorites:");
-        DefaultListModel<String> list = new DefaultListModel<String>();
-        Iterator<String> it = myFavoritesManager.favoritesIDIterator();
+        DefaultListModel<Task> list = new DefaultListModel<Task>();
+        Iterator<Task> it = myFavoritesManager.favoritesIDIterator();
         while(it.hasNext()){
             list.addElement(it.next());
         }
         if(list.isEmpty()){
-            list.addElement("No favorites");
+            list.addElement(null);
         }
-        JList<String> favoritesList = new JList<String>(list);
+        JList<Task> favoritesList = new JList<Task>(list);
         jp.add(favoritesList);
         mainPage.add(jp);
         return mainPage;

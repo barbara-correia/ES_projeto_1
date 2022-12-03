@@ -34,7 +34,7 @@ public class FavoritesManagerImpl implements FavoritesManager{
     }
 
     @Override
-    public Iterator<String> favoritesIDIterator() {
-        return favorites.keySet().iterator();
+    public Iterator<Task> favoritesIDIterator() {
+        return favorites.values().iterator();
     }
 }

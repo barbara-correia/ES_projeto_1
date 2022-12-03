@@ -171,6 +171,7 @@ public class GanttTaskPropertiesBean extends JPanel {
    * Project tagManager
    */
   private final TagManager myTagManager;
+  private final FavoritesManager myFavoriteManager;
   private final IGanttProject myProject;
   private final UIFacade myUIfacade;
 
@@ -185,6 +186,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     myRoleManager = project.getRoleManager();
     myTaskManager = project.getTaskManager();
     myTagManager = project.getTagManager();
+    myFavoriteManager = project.getFavoriteManager();
     myProject = project;
     myUIfacade = uifacade;
     init();
@@ -444,8 +446,16 @@ public class GanttTaskPropertiesBean extends JPanel {
       if(favoriteTaskCheckBox != null) {
         if(originalIsFavorite != isFavorite()){
           mutator.setFavorite(isFavorite());
+          myFavoriteManager.addFavorite(selectedTasks[i]);
         }
       }
+
+      if(!favoriteTaskCheckBox.isSelected()){
+        if(myFavoriteManager.isFavorite(selectedTasks[i]))
+          myFavoriteManager.removeFavorite(selectedTasks[i]);
+      }
+
+
 
       if (!originalStartDate.equals(getStart())) {
         mutator.setStart(getStart());
@@ -486,6 +496,7 @@ public class GanttTaskPropertiesBean extends JPanel {
       if(selectedTasks[i].isTagged()){
         mutator.setColor(getTag().getTagColor());
         myTagManager.addTaskToTag(getTag().getTagName(),selectedTasks[i]);
+
 
      }else if(wasTagged) {
         mutator.setColor(myUIfacade.getGanttChart().getTaskDefaultColorOption().getValue());

@@ -40,5 +40,5 @@ public interface FavoritesManager {
      * Iterates the key collection of the favorite tasks.
      * @return iterator of the key values of the favorite tasks collection.
      */
-    Iterator<String> favoritesIDIterator();
+    Iterator<Task> favoritesIDIterator();
 }

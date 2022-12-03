@@ -1170,6 +1170,10 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     return myTagManager;
   }
 
+  public FavoritesManager getFavoriteManager(){
+    return myFavoritesManager;
+  }
+
   @Override
   public RoleManager getRoleManager() {
     if (myRoleManager == null) {
