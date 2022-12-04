@@ -28,20 +28,16 @@ public class FavoritesPanel {
 
     private final FavoritesManager myFavoritesManager;
     private final UIFacade myUIFacade;
-    private final StringOption myNameField;
-
-
-    private final IGanttProject myProject;
 
     private final TaskManager myTaskManager;
-
+    private  CopyFavAction myCopyFavAction;
 
     public FavoritesPanel(FavoritesManager myFavoritesManager, UIFacade myUIFacade, IGanttProject myProject, TaskManager myTaskManager) {
         this.myFavoritesManager = myFavoritesManager;
-        this.myUIFacade = myUIFacade;
-        myNameField = new DefaultStringOption("name");
-        this.myProject = myProject;
+        this.myUIFacade = myUIFacade;;
         this.myTaskManager = myTaskManager;
+        myCopyFavAction = new CopyFavAction(myProject,myUIFacade, null);
+
     }
 
     public void setVisible(boolean isVisible){
@@ -67,8 +63,7 @@ public class FavoritesPanel {
                 }
             };
             if (myFavoritesManager.getNFavorites() > 0) {
-                SelectFavAction selectFavAction = new SelectFavAction(myProject, myUIFacade, myTaskManager, myFavoritesManager);
-                myUIFacade.createDialog(contentPane, new Action[]{okAction, selectFavAction}, "Favorites").show();
+                myUIFacade.createDialog(contentPane, new Action[]{okAction, myCopyFavAction}, "Favorites").show();
             }else{
                 myUIFacade.createDialog(contentPane, new Action[]{okAction}, "Favorites").show();
             }
@@ -104,10 +99,10 @@ public class FavoritesPanel {
         favoritesList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 2) {
-                    //...Show the JDialog or JOptionPane here, not JPanel.
-                    JFrame f = new JFrame();
-                    JOptionPane.showMessageDialog(f,"ID: " + favoritesList.getSelectedValue().getTaskID());
+                JFrame f = new JFrame();
+                Task t = favoritesList.getSelectedValue();
+                if(evt.getClickCount() == 1){
+                    myCopyFavAction.setFavTask(t);
                 }
             }
         });

@@ -26,15 +26,18 @@ import net.sourceforge.ganttproject.gui.UIUtil;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class CopyFavAction extends GPAction {
     private final IGanttProject myProject;
     private final UIFacade myUiFacade;
-    private final Task myTask;
+    private  Task myTask;
 
     private static final String COPY = "Copiar Tarefa";
+
+    private static final String ERROR_MSG = "Por favor selecione uma tarefa!";
 
 
     public CopyFavAction(IGanttProject project, UIFacade uiFacade, Task t) {
@@ -59,12 +62,17 @@ public class CopyFavAction extends GPAction {
         if (calledFromAppleScreenMenu(e)) {
             return;
         }
+        if (myTask == null) {
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f, ERROR_MSG);
+        } else{
         myUiFacade.getUndoManager().undoableEdit(getLocalizedDescription(), new Runnable() {
             @Override
             public void run() {
-                Task newTask = getTaskManager().newTaskBuilder().buildFromTask(myTask);
+                getTaskManager().newTaskBuilder().buildFromTask(myTask);
             }
         });
+    }
     }
 
     protected TaskManager getTaskManager() {
@@ -78,6 +86,10 @@ public class CopyFavAction extends GPAction {
     @Override
     public void updateAction() {
         super.updateAction();
+    }
+
+    public void setFavTask(Task toCopy){
+        this.myTask = toCopy;
     }
 
 }

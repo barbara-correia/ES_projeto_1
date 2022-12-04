@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ganttproject-builder.iml" filepath="$PROJECT_DIR$/.idea/modules/ganttproject-builder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....iml" filepath="$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.iml" filepath="$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/1907615737/ganttproject-builder....biz.ganttproject.core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.iml" filepath="$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-473516370/ganttproject-builder....biz.ganttproject.impex.ical.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.iml" filepath="$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/1179994376/ganttproject-builder....biz.ganttproject.impex.msproject2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.iml" filepath="$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.iml" filepath="$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-2116444493/ganttproject-builder....ganttproject-tester.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.test.iml" filepath="$PROJECT_DIR$/.idea/modules/1644010073/ganttproject-builder....ganttproject.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.iml" filepath="$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.main.iml" filepath="$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.test.iml" filepath="$PROJECT_DIR$/.idea/modules/26421938/ganttproject-builder....org.ganttproject.chart.pert.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.iml" filepath="$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.main.iml" filepath="$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.test.iml" filepath="$PROJECT_DIR$/.idea/modules/391891053/ganttproject-builder....org.ganttproject.impex.htmlpdf.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....test.iml" filepath="$PROJECT_DIR$/.idea/modules/-1560534149/ganttproject-builder....test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ganttproject-builder.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ganttproject-builder.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ganttproject-builder.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ganttproject-builder.test.iml" />
+    </modules>
+  </component>
+</project>

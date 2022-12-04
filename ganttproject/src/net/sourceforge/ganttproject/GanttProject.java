@@ -386,15 +386,6 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     getViewManager().createView(myResourceChartTabContent, new ImageIcon(getClass().getResource("/icons/res_16.gif")));
     getViewManager().toggleVisible(myResourceChartTabContent);
 
-    //Favorites Tasks
-    myFavoriteGanttChartTabContent = new FavoriteGanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
-            getUIConfiguration());
-    getViewManager().createView(myFavoriteGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/favorites_16.gif")));
-    getViewManager().toggleVisible(myFavoriteGanttChartTabContent);
-
-
-
-
     addComponentListener(new ComponentAdapter() {
       @Override
       public void componentShown(ComponentEvent e) {

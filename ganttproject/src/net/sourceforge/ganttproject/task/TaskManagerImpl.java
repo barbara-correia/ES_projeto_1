@@ -419,11 +419,14 @@ public class TaskManagerImpl implements TaskManager {
         return task;
       }
 
+      /**
+       * Creates a new task from an existing one by setting most fields the same as param
+       * @param t - task to copy
+       * @return new task that copies t
+       */
       public Task buildFromTask(Task t){
         Task task = this.build();
         TaskMutator m = task.createMutator();
-        System.out.println("OLAAA");
-        System.out.println(t.getName());
         m.setName(t.getName());
         m.setStart(t.getStart());
         m.setEnd(t.getEnd());
