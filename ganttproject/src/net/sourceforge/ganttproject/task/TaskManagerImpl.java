@@ -204,6 +204,8 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
+  private Boolean isZeroFavorites = true;
+
   TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
@@ -350,12 +352,12 @@ public class TaskManagerImpl implements TaskManager {
         }
 
         TaskImpl task = myPrototype == null
-            ? new GanttTask("", CalendarFactory.createGanttCalendar(), 1, TaskManagerImpl.this, myId)
-            : new GanttTask(TaskManagerImpl.this, (TaskImpl)myPrototype);
+                ? new GanttTask("", CalendarFactory.createGanttCalendar(), 1, TaskManagerImpl.this, myId)
+                : new GanttTask(TaskManagerImpl.this, (TaskImpl) myPrototype);
 
         if (myPrototype == null) {
           String name = myName == null
-              ? getTaskNamePrefixOption().getValue() + "_" + task.getTaskID() : myName;
+                  ? getTaskNamePrefixOption().getValue() + "_" + task.getTaskID() : myName;
           task.setName(name);
         } else if (myName != null) {
           task.setName(myName);
@@ -371,7 +373,7 @@ public class TaskManagerImpl implements TaskManager {
           duration = myPrototype.getDuration();
         } else {
           duration = (myEndDate == null)
-              ? createLength(getTimeUnitStack().getDefaultTimeUnit(), 1.0f)
+                  ? createLength(getTimeUnitStack().getDefaultTimeUnit(), 1.0f)
                   : createLength(getTimeUnitStack().getDefaultTimeUnit(), myStartDate, myEndDate);
         }
         task.setDuration(duration);
@@ -416,6 +418,29 @@ public class TaskManagerImpl implements TaskManager {
         fireTaskAdded(task);
         return task;
       }
+
+        /**
+         * Creates a new task from an existing one by setting most fields the same as param
+         * @param t - task to copy
+         * @return new task that copies t
+         */
+        public Task buildFromTask(Task t) {
+          Task task = this.build();
+          TaskMutator m = task.createMutator();
+          m.setName(t.getName());
+          m.setStart(t.getStart());
+          m.setEnd(t.getEnd());
+          m.setTaskInfo(t.getTaskInfo());
+          m.setDuration(t.getDuration());
+          m.setMilestone(t.isMilestone());
+          m.setPriority(t.getPriority());
+          m.setTag(t.getTag());
+          m.setNotes(t.getNotes());
+          m.setWebLink(t.getWebLink());
+          m.setColor(t.getColor());
+          m.commit();
+          return task;
+        }
     };
   }
 
@@ -1252,6 +1277,10 @@ public class TaskManagerImpl implements TaskManager {
   @Override
   public Boolean isZeroMilestones() {
     return isZeroMilestones;
+  }
+
+  public Boolean isZeroFavorites(){
+    return isZeroFavorites;
   }
 
   @Override

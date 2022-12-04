@@ -35,6 +35,7 @@ import net.sourceforge.ganttproject.action.ArtefactNewAction;
 import net.sourceforge.ganttproject.action.ArtefactPropertiesAction;
 import net.sourceforge.ganttproject.action.GPAction;
 import net.sourceforge.ganttproject.action.edit.EditMenu;
+import net.sourceforge.ganttproject.action.favorites.FavoritesAction;
 import net.sourceforge.ganttproject.action.help.HelpMenu;
 import net.sourceforge.ganttproject.action.project.ProjectMenu;
 import net.sourceforge.ganttproject.action.resource.ResourceActionSet;
@@ -161,6 +162,11 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
    */
   private final TagManager myTagManager;
 
+  /**
+   * Favorite manager
+   */
+  private final FavoritesManager myFavoritesManager;
+
   private final FacadeInvalidator myFacadeInvalidator;
 
   private UIConfiguration myUIConfiguration;
@@ -174,6 +180,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   private MouseListener myStopEditingMouseListener = null;
 
   private GanttChartTabContentPanel myGanttChartTabContent;
+
+  private FavoriteGanttChartTabContentPanel myFavoriteGanttChartTabContent;
 
   private ResourceChartTabContentPanel myResourceChartTabContent;
 
@@ -273,6 +281,9 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     setIconImage(icon.getImage());
     myTagManager = new TagManagerImpl();
 
+
+    myFavoritesManager = new FavoritesManagerImpl();
+
     myFacadeInvalidator = new FacadeInvalidator(getTree().getModel(), myRowHeightAligners);
     getProject().addProjectEventListener(myFacadeInvalidator);
     area = new GanttGraphicArea(this, getTree(), getTaskManager(), getZoomManager(), getUndoManager());
@@ -345,6 +356,14 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
         mTag.add(new TagEditAction(getTagManager(), getUIFacade(), getTaskManager()));
       mTag.add(new TaskByTagAction(getTagManager(), getUIFacade()));
       bar.add(mTag);
+    }
+
+    {
+      JMenu mFavorites = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Favoritos"));
+      Action pop = new FavoritesAction("Mostar lista de favoritos", this.myFavoritesManager,
+              this.getUIFacade(), getProject(), getTaskManager());
+      mFavorites.add(pop);
+      bar.add(mFavorites);
     }
 
 
@@ -639,6 +658,9 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
               bNewTask.setVisible(false);
               bnewResource.setVisible(true);
               return;
+            case UIFacade.FAVORITE_INDEX:
+              bNewTask.setVisible(false);
+              bnewResource.setVisible((false));
           }
         }
       });
@@ -1139,6 +1161,10 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   @Override
   public TagManager getTagManager() {
     return myTagManager;
+  }
+
+  public FavoritesManager getFavoriteManager(){
+    return myFavoritesManager;
   }
 
   @Override
