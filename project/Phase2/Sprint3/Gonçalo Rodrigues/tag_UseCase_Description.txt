@@ -3,11 +3,22 @@ Description: The Project Manager selects a task and adds it to the filter
 Main actor: Project Manager
 Secondary actors: None  
 Pre-conditions: The selected task exists and it was not added to the filter.
+Main flow:
+1. The case starts when the project manager selects the "Add task" option.
+2. A new task with a predefined name is added.
+
 Post-conditions: The task is now shown when the filter is selected.
+
 
 Use Case: Project Manager removes a task from the filter.
 Description: The Project Manager selects a task and removes it from the filter.
 Main actor: Project Manager
 Secondary actors: None  
 Pre-conditions: The selected task exists and it's on the filter's task list.
+"Main flow:
+1. The case starts when the project manager presses the "Delete" key or selects the "Delete task" option.
+2. If task is a favorite task:
+  2.1 Remove the selected task from the favorites list.
+3. Erases the task from the application
+4. Removes the task from the list of tasks"
 Post-conditions: The task doesn't belong to the filter's task list and will not be shown when the filter is selected.
