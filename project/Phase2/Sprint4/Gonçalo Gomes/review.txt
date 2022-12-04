@@ -2,6 +2,6 @@ The use cases in the description should have the same name as the use cases in t
 
 Select resource should be directly connected to the actor and not to the use cases "edit a resource" and "delete a resource".
 
-The correct relationship is «extend», meaning it should have the «...» as well as lower case E and no S.  
+The correct relationship is «include» as the Project Manager must have selected the resource before deleting it or editing it.
 
 Use case diagrams do not connect the actor to the use cases using arrows. It should be just connections.
