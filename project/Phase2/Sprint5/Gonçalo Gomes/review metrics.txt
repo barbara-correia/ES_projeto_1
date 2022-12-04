@@ -1,0 +1,9 @@
+WMC - Tudo em ordem
+
+CBO - falta indicar as consequencias que isto causa no projeto/classe
+
+DIT - Indicar qual é o valor recomendado a não ultrapassar e as consequencias que essa complexidade pode causar - code smells
+
+NOC - falta indicar as consequencias que isto causa no projeto/classe
+
+ 
