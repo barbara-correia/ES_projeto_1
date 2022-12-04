@@ -1,11 +1,11 @@
-Use Case: Project Manager adds a new resource
+Use Case: Add a new resource
 Description: The Project Manager creates a new resource adding it to the app.
 Main actor: Project Manager
 Secondary actors: None
 Pre-conditions: None
 Post-conditions: The resource is now added. The resource is now in the app and can be managed.
 
-Use Case: Project Manager selects a resource
+Use Case: Selects a resource
 Description: The Project Manager selects a resource to edit it.
 Main actor: Project Manager
 Secondary actors: None
@@ -13,7 +13,7 @@ Pre-conditions: The selected resource exists.
 Post-conditions: The resource is now selected.
 
 
-Use Case: Project Manager removes a resource
+Use Case: Delete a resource
 Description: The Project Manager removes a selected resource.
 Main actor: Project Manager
 Secondary actors: None
@@ -21,7 +21,7 @@ Pre-conditions: The resource exists and is selected.
 Post-conditions: The resource is no longer on the app.
 
 
-Use Case: Project Manager edits a resource
+Use Case: Edit a resource
 Description: The Project Manager edits a selected resource.
 Main actor: Project Manager
 Secondary actors: None
