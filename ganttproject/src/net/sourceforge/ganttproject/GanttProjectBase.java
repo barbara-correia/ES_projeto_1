@@ -443,6 +443,8 @@ abstract class GanttProjectBase extends JFrame implements IGanttProject, UIFacad
   @Override
   public abstract TagManager getTagManager();
 
+  public abstract  FavoritesManager getFavoriteManager();
+
   @Override
   public abstract TaskContainmentHierarchyFacade getTaskContainment();
 

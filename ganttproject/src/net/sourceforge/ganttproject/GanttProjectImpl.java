@@ -54,6 +54,7 @@ public class GanttProjectImpl implements IGanttProject {
    * Project tagManager
    */
   private final TagManager myTagManager;
+  private final FavoritesManager myFavoriteManager;
   private final HumanResourceManager myResourceManager;
   private final TaskManagerConfigImpl myTaskManagerConfig;
   private Document myDocument;
@@ -69,6 +70,7 @@ public class GanttProjectImpl implements IGanttProject {
     myTaskManagerConfig = new TaskManagerConfigImpl(myResourceManager, myCalendar, GanttLanguage.getInstance());
     myTaskManager = TaskManager.Access.newInstance(null, myTaskManagerConfig);
     myTagManager = new TagManagerImpl();
+    myFavoriteManager = new FavoritesManagerImpl();
     myUIConfiguration = new UIConfiguration(Color.BLUE, true);
     myTaskCustomColumnManager = new CustomColumnsManager();
     myCalendar.addListener(new GPCalendarListener() {
@@ -152,6 +154,11 @@ public class GanttProjectImpl implements IGanttProject {
   @Override
   public TagManager getTagManager() {
     return myTagManager;
+  }
+
+  @Override
+  public FavoritesManager getFavoriteManager() {
+    return myFavoriteManager;
   }
 
   @Override

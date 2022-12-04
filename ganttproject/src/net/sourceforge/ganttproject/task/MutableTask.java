@@ -33,6 +33,8 @@ public interface MutableTask {
 
   void setMilestone(boolean isMilestone);
 
+  void setFavorite(boolean isFavorite);
+
   void setPriority(Task.Priority priority);
 
   /**
