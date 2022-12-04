@@ -357,7 +357,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     {
       JMenu mFavorites = UIUtil.createTooltiplessJMenu(GPAction.createVoidAction("Favoritos"));
-      Action pop = new FavoritesAction("Mostar lista de favoritos", this.myFavoritesManager, this.getUIFacade());
+      Action pop = new FavoritesAction("Mostar lista de favoritos", this.myFavoritesManager,
+              this.getUIFacade(), getProject(), getTaskManager());
       mFavorites.add(pop);
       bar.add(mFavorites);
     }

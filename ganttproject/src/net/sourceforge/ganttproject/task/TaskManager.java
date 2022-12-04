@@ -145,7 +145,10 @@ public interface TaskManager {
     }
 
     public abstract Task build();
+
+    public abstract Task buildFromTask(Task t);
   }
+
 
   public TaskBuilder newTaskBuilder();
 

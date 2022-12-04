@@ -418,6 +418,27 @@ public class TaskManagerImpl implements TaskManager {
         fireTaskAdded(task);
         return task;
       }
+
+      public Task buildFromTask(Task t){
+        Task task = this.build();
+        TaskMutator m = task.createMutator();
+        System.out.println("OLAAA");
+        System.out.println(t.getName());
+        m.setName(t.getName());
+        m.setStart(t.getStart());
+        m.setEnd(t.getEnd());
+        m.setTaskInfo(t.getTaskInfo());
+        m.setDuration(t.getDuration());
+        m.setMilestone(t.isMilestone());
+        m.setPriority(t.getPriority());
+        m.setTag(t.getTag());
+        m.setNotes(t.getNotes());
+        m.setWebLink(t.getWebLink());
+        m.setColor(t.getColor());
+        m.commit();
+        return task;
+        }
+
     };
   }
 

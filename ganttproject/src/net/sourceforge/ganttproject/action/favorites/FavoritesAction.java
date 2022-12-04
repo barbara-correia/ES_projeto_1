@@ -1,8 +1,10 @@
 package net.sourceforge.ganttproject.action.favorites;
 
 
+import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.task.FavoritesManager;
+import net.sourceforge.ganttproject.task.TaskManager;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,11 +17,17 @@ public class FavoritesAction extends AbstractAction implements Action {
     FavoritesManager myFavoritesManager;
     UIFacade uiFacade;
 
+    IGanttProject myProject;
 
-    public FavoritesAction(String text, FavoritesManager myFavoritesManager, UIFacade uiFacade){
+    TaskManager myTaskManager;
+
+
+    public FavoritesAction(String text, FavoritesManager myFavoritesManager, UIFacade uiFacade, IGanttProject myProject, TaskManager taskManager){
         super(text);
         this.myFavoritesManager = myFavoritesManager;
         this.uiFacade = uiFacade;
+        this.myProject = myProject;
+        this.myTaskManager = taskManager;
 
     }
 
@@ -27,7 +35,7 @@ public class FavoritesAction extends AbstractAction implements Action {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FavoritesPanel favsPanel = new FavoritesPanel(myFavoritesManager, uiFacade);
+        FavoritesPanel favsPanel = new FavoritesPanel(myFavoritesManager, uiFacade, myProject, myTaskManager);
         favsPanel.setVisible(true);
     }
 }

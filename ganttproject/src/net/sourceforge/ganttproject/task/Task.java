@@ -128,6 +128,8 @@ public interface Task extends MutableTask {
    */
   boolean isTagged();
 
+  String getWebLink();
+
   List<TaskActivity> getActivities();
 
   GanttCalendar getStart();

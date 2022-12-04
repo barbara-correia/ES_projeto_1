@@ -1,18 +1,24 @@
 package net.sourceforge.ganttproject.action.favorites;
 
 import biz.ganttproject.core.option.*;
-import net.sourceforge.ganttproject.action.CancelAction;
+import net.sourceforge.ganttproject.GPLogger;
+import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.action.OkAction;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.gui.options.OptionsPageBuilder;
+import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.task.FavoritesManager;
 import net.sourceforge.ganttproject.task.Task;
+import net.sourceforge.ganttproject.task.TaskManager;
+import net.sourceforge.ganttproject.task.dependency.TaskDependencyException;
+
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.util.Iterator;
 
 /**
@@ -24,10 +30,18 @@ public class FavoritesPanel {
     private final UIFacade myUIFacade;
     private final StringOption myNameField;
 
-    public FavoritesPanel(FavoritesManager myFavoritesManager, UIFacade myUIFacade) {
+
+    private final IGanttProject myProject;
+
+    private final TaskManager myTaskManager;
+
+
+    public FavoritesPanel(FavoritesManager myFavoritesManager, UIFacade myUIFacade, IGanttProject myProject, TaskManager myTaskManager) {
         this.myFavoritesManager = myFavoritesManager;
         this.myUIFacade = myUIFacade;
         myNameField = new DefaultStringOption("name");
+        this.myProject = myProject;
+        this.myTaskManager = myTaskManager;
     }
 
     public void setVisible(boolean isVisible){
@@ -36,12 +50,28 @@ public class FavoritesPanel {
             OkAction okAction = new OkAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   {
-                       //myGroup.commit();
-                   }
+                    final GanttLanguage language = GanttLanguage.getInstance();
+                    myUIFacade.getUndoManager().undoableEdit(language.getText("properties.changed"), new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                myTaskManager.getAlgorithmCollection().getRecalculateTaskScheduleAlgorithm().run();
+                            } catch (TaskDependencyException e) {
+                                if (!GPLogger.log(e)) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            myUIFacade.refresh();
+                        }
+                    });
                 }
             };
-            myUIFacade.createDialog(contentPane, new Action[]{okAction}, "Favorites").show();
+            if (myFavoritesManager.getNFavorites() > 0) {
+                SelectFavAction selectFavAction = new SelectFavAction(myProject, myUIFacade, myTaskManager, myFavoritesManager);
+                myUIFacade.createDialog(contentPane, new Action[]{okAction, selectFavAction}, "Favorites").show();
+            }else{
+                myUIFacade.createDialog(contentPane, new Action[]{okAction}, "Favorites").show();
+            }
         }
     }
 
@@ -70,10 +100,25 @@ public class FavoritesPanel {
         if(list.isEmpty()){
             list.addElement(null);
         }
-        JList<Task> favoritesList = new JList<Task>(list);
+        final JList<Task> favoritesList = new JList<Task>(list);
+        favoritesList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    //...Show the JDialog or JOptionPane here, not JPanel.
+                    JFrame f = new JFrame();
+                    JOptionPane.showMessageDialog(f,"ID: " + favoritesList.getSelectedValue().getTaskID());
+                }
+            }
+        });
         jp.add(favoritesList);
         mainPage.add(jp);
         return mainPage;
 
     }
+
+
+
 }
+
+

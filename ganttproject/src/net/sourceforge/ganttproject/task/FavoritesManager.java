@@ -16,6 +16,8 @@ public interface FavoritesManager {
      */
     void addFavorite(Task task);
 
+    Task getFavoriteTask(Integer taskID);
+
     /**
      * Removes a favorite task, if that task is a favorite task.
      * @param task favorite task to be removed from the favorite list (data structure managed by this class).
@@ -29,6 +31,9 @@ public interface FavoritesManager {
      */
 
     boolean isFavorite(Task task);
+
+    int getNFavorites();
+
 
     /**
      * Iterates the favorite tasks.
